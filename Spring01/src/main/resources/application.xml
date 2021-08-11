@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--1.加载属性文件-->
+    <context:property-placeholder location="db.properties"/>
+    <!--2.读取属性文件中的数据注入到数据源对象中-->
+    <bean id="myDataSource" class="com.woniuxy.bean.MyDataSource">
+        <property name="url" value="${url}"/>
+        <property name="user" value="${user}"/>
+        <property name="password" value="${password}"/>
+        <property name="driverClassName" value="${driver}"/>
+        <property name="initPoolSize" value="${initPoolSize}"/>
+        <property name="maxPoolSize" value="${maxPoolSize}"/>
+    </bean>
+
+
+    <!--    1.一个bean管理一个java类-->
+    <!--    将UserDao交给容器进行管理
+        id, class
+        init-method:bean实例化后执行
+        destroy-method:bean销毁时执行
+        scope:singleton(默认单例)/prototype(多例)
+    -->
+    <bean id="userDaoId" class="com.woniuxy.dao.UserDao" init-method="init" destroy-method="destroy"></bean>
+
+    <bean id="userServiceId" class="com.woniuxy.service.UserService">
+        <!--注入 通过set 注入属性值
+          name:userService类的属性名称
+
+          ref: 注入 引用类型的值(对象类型)
+          value:注入简单类型(字符串，整数，小数...)
+        -->
+        <property name="userDao" ref="userDaoId"></property>
+    </bean>
+
+    <bean id="goodType" class="com.woniuxy.bean.GoodType">
+        <property name="id" value="1"/>
+        <property name="typeName" value="大陆国行"/>
+    </bean>
+
+    <bean id="good" class="com.woniuxy.bean.Good">
+        <property name="id" value="1"/>
+        <property name="goodsName" value="三星s20"/>
+        <property name="goodsPrice" value="88.88"/>
+        <property name="goodType" ref="goodType"/>
+    </bean>
+
+
+    <bean id="student01" class="com.woniuxy.bean.Student">
+        <constructor-arg name="id" value="1"/>
+        <constructor-arg name="stuName" value="jack"/>
+        <constructor-arg name="stuPhone" value="10086"/>
+    </bean>
+
+    <bean id="teacher" class="com.woniuxy.bean.Teacher">
+        <constructor-arg name="id" value="1"/>
+        <constructor-arg name="teaName" value="marry"/>
+    </bean>
+
+    <bean id="student02" class="com.woniuxy.bean.Student">
+        <constructor-arg name="id" value="1"/>
+        <constructor-arg name="stuName" value="jack"/>
+        <constructor-arg name="stuPhone" value="10086"/>
+        <constructor-arg name="teacher" ref="teacher"/>
+    </bean>
+</beans>
