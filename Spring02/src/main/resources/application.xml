@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+        https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+<!--    1.设置注解的扫描范围-->
+    <context:component-scan base-package="com.woniuxy"/>
+<!--    2.注解的使用说明
+        @Repository 代替dao层的bean标签
+        @Service 代替service层的bean标签
+        @Controller 代替web层的bean标签
+        类上的注解id为首字母小写的类名
+-->
+
+    
+<bean id="userController" class="com.woniuxy.controller.UserController">
+    <property name="id" value="3"/>
+</bean>
+
+</beans>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+        https://www.springframework.org/schema/aop/spring-aop.xsd">
+    <!--1.配置注解扫描范围-->
+    <context:component-scan base-package="com.woniuxy">
+        <!--排除bean目录  bean目录不扫描-->
+        <context:exclude-filter type="annotation" expression="com.woniuxy.bean"></context:exclude-filter>
+        <context:exclude-filter type="annotation" expression="com.woniuxy.util"></context:exclude-filter>
+    </context:component-scan>
+    <!--2.加载属性文件-->
+    <context:property-placeholder location="classpath:db.properties"></context:property-placeholder>
+    <!--3.配置数据源 DruidDataSource-->
+    <!--druid-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${driver}"/>
+        <property name="url" value="${url}"/>
+        <property name="password" value="${password}"/>
+        <property name="username" value="${user}"/>
+        <property name="initialSize" value="${initPoolSize}"/>
+        <property name="maxActive" value="${maxPoolSize}"/>
+    </bean>
+
+    <!--支持aop注解声明-->
+    <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+    <!--4.sqlSessionFactory 交给spring容器进行管理-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--4.1 加载全局映射文件-->
+        <property name="configLocation" value="classpath:mybatis-config.xml"></property>
+        <!--4.2 加载数据源-->
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+
+    <!--5.将mapper代理对象交给spring容器进行管理-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.woniuxy.mapper"></property>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+    </bean>
+</beans>

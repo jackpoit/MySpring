@@ -1,6 +1,7 @@
 package com.woniuxy.util;
 
-import com.woniuxy.bean.Good;
+
+import com.woniuxy.bean.User;
 
 /**
  * @Author: rua
@@ -36,8 +37,8 @@ public class BeanFactory {
 
 
 	public static void main(String[] args) {
-		Good good = (Good) FACTORY.getBean("good");
-		System.out.println(good);
+		User user = (User) FACTORY.getBean("user");
+		System.out.println(user);
 
 	}
 

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--将User创建交给Spring   IOC过程-->
+    <!--
+        id:bean对象的唯一标识[不可重复]
+        class:对象的完整类型[包名.类名]
+        scope:bean对象的范围
+            singleton:单例[默认值]
+            prototype:原型[多例对象] 整合struts2时使用
+        init-method: 创建对象后会默认调用init方法做对象初始化
+        destroy-method:
+    -->
+    <bean id="user" class="com.woniuxy.bean.User" init-method="init" destroy-method="destroy">
+    </bean>
+
+
+    <!-- more bean definitions go here -->
+
+</beans>

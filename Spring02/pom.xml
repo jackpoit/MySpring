@@ -9,8 +9,7 @@
     <version>1.0-SNAPSHOT</version>
   </parent>
   <artifactId>Spring02</artifactId>
-  <packaging>war</packaging>
-
+  <packaging>jar</packaging>
   <name>Spring02 Maven Webapp</name>
   <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
@@ -22,6 +21,22 @@
   </properties>
 
   <dependencies>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+    </dependency>
+
+    <!-- junit -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+    </dependency>
+    <!-- lombok -->
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+    </dependency>
 
   </dependencies>
 
