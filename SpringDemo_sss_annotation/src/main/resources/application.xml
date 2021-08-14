@@ -24,6 +24,7 @@
         <property name="maxActive" value="${maxPoolSize}"/>
     </bean>
 
+<context:component-scan base-package="com.woniuxy"/>
 
     <!--Spring为持久层提供了解决方案:SpringJDBC(小型的ORM框架)
         导入Spring-jdbc jar包 Spring-tx jar包-->
@@ -31,15 +32,6 @@
         <property name="dataSource" ref="druid"/>
     </bean>
 
-    <!--将Dao的实现类对象交给Spring管理-->
-    <bean id="empDao" class="com.woniuxy.dao.impl.EmployeeDaoImpl">
-        <property name="jdbcTemplate" ref="jdbc"/>
-    </bean>
-
-    <!--将Service的实现类对象交给Spring管理-->
-    <bean id="empService" class="com.woniuxy.service.impl.EmployeeServiceImpl">
-        <property name="employeeDao" ref="empDao"/>
-    </bean>
 
 
 

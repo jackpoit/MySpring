@@ -2,9 +2,11 @@ package com.woniuxy.dao.impl;
 
 import com.woniuxy.dao.EmployeeDao;
 import com.woniuxy.entity.Employee;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -13,16 +15,10 @@ import java.util.List;
  * @Date: 2021/8/14 16:48
  * @Description: dao实现类对象 操作JDBC
  */
+@Repository
 public class EmployeeDaoImpl implements EmployeeDao {
-
+	@Autowired
 	private JdbcTemplate jdbcTemplate; //单例
-	public JdbcTemplate getJdbcTemplate() {
-		return jdbcTemplate;
-	}
-
-	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-		this.jdbcTemplate = jdbcTemplate;
-	}
 
 	//Spring jdbc查不到数据程序会崩溃,所以要try catch程序优化一下
 	@Override

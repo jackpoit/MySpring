@@ -1,5 +1,6 @@
 package com.woniuxy.test;
 
+import com.woniuxy.ApplicationConfig;
 import com.woniuxy.dao.EmployeeDao;
 import com.woniuxy.entity.Employee;
 import com.woniuxy.service.EmployeeService;
@@ -17,7 +18,8 @@ import java.util.List;
  * @Description:
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:application.xml")
+//@ContextConfiguration("classpath:application.xml")
+@ContextConfiguration(classes = {ApplicationConfig.class})
 public class SpringTest {
 
 	@Autowired //按照类型来自动装配属性的值
@@ -33,6 +35,7 @@ public class SpringTest {
 			System.out.println(employee);
 		}
 	}
+
 	@Test
 	public void test2(){
 
@@ -41,4 +44,10 @@ public class SpringTest {
 
 	}
 
+	@Test
+	public void testPath(){
+		System.out.println(	 ApplicationConfig.class.getResource("").getPath());
+		System.out.println(	 ApplicationConfig.class.getClassLoader().getResource("").getPath());
+
+	}
 }
