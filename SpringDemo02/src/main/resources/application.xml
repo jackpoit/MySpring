@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--将Employee创建交给Spring   IOC过程-->
+
+
+
+    <!-- !!!!!!DI注入方式二:[开发主流:通过setXxxx注入属性的值]-->
+
+    <bean id="dept" class="com.woniuxy.entity.Department">
+        <property name="id" value="1"/>
+        <property name="dname" value="市场部"/>
+        <property name="zone" value="华东区"/>
+    </bean>
+
+
+    <bean id="emp" class="com.woniuxy.entity.Employee">
+        <!--property中的name属性绑定的是当前类的属性的字段名-->
+        <property name="id" value="5"/>
+        <property name="name" value="张三"/>
+        <property name="gender" value="男"/>
+        <property name="salary" value="8888.88"/>
+        <!--对象的属性注入
+            ref引用-->
+        <property name="dept" ref="dept"/>
+
+<!--        &lt;!&ndash;通过内部bean来配置  只能emp使用 [有缺陷]&ndash;&gt;-->
+<!--        <property name="dept">-->
+<!--            <bean class="com.woniuxy.entity.Department">-->
+<!--                <property name="id" value="2"/>-->
+<!--                <property name="dname" value="市场部"/>-->
+<!--                <property name="zone" value="华东区"/>-->
+<!--            </bean>-->
+<!--        </property>-->
+    </bean>
+
+
+    <!--    <bean id="emp" class="com.woniuxy.entity.Employee">-->
+    <!--        &lt;!&ndash;DI注入方式一:通过构造函数来注入属性[冷门注入:开发基本不用]&ndash;&gt;-->
+    <!--        <constructor-arg index="0" value="10"/>-->
+    <!--        <constructor-arg index="1" value="admin"/>-->
+    <!--        <constructor-arg index="2" value="男"/>-->
+    <!--    </bean>-->
+
+    <!--    &lt;!&ndash;将Employee创建交给Spring   IOC过程&ndash;&gt;-->
+    <!--    <bean id="emp2" class="com.woniuxy.entity.Employee">-->
+    <!--        &lt;!&ndash;name属性绑定的是形参变量名 不是属性名&ndash;&gt;-->
+    <!--        <constructor-arg name="ids" value="10"/>-->
+    <!--        <constructor-arg name="name" value="admin"/>-->
+    <!--        <constructor-arg name="gender" value="男"/>-->
+    <!--    </bean>-->
+</beans>

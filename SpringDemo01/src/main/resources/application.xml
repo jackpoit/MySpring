@@ -14,10 +14,10 @@
         init-method: 创建对象后会默认调用init方法做对象初始化
         destroy-method:
     -->
-    <bean id="user" class="com.woniuxy.bean.User" init-method="init" destroy-method="destroy">
+<!--体现IOC:Inversion of Control 控制反转技术将对象的创建交给Spring容器管理(Spring工厂就是Spring容器)-->
+    <bean id="user" class="com.woniuxy.bean.User" scope="prototype"  init-method="init" destroy-method="destroy">
     </bean>
 
-
-    <!-- more bean definitions go here -->
+<!--    <bean id="user2" class="com.woniuxy.bean.User"/>-->
 
 </beans>

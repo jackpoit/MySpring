@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--通过setXxx来注入高级类型-->
+    <bean id="bean" class="com.woniuxy.entity.Bean">
+        <!--数组的注入-->
+        <property name="arr">
+            <array>
+                <value>woniu</value>
+                <value>huawei</value>
+                <value>baidu</value>
+            </array>
+        </property>
+
+        <!--集合的注入-->
+        <property name="lists">
+            <list>
+                <value>1</value>
+                <value>2</value>
+                <value>3</value>
+            </list>
+        </property>
+        <!--Set集合的注入-->
+        <property name="sets">
+            <set>
+                <value>abc</value>
+                <value>admin</value>
+                <value>abc</value>
+            </set>
+        </property>
+        <!--hashMap的注入-->
+        <property name="hashMap">
+            <map>
+                <!-- 一个entry就是一个键值对-->
+                <entry key="1" value="张三"/>
+                <entry key="2" value="李四"/>
+                <entry key="3" value="王五"/>
+                <entry key="1" value="王五"/>
+            </map>
+        </property>
+
+    </bean>
+
+
+</beans>

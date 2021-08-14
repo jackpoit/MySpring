@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--通过上下文加载属性文件
+        注意要加classpath
+    -->
+    <context:property-placeholder location="classpath:db.properties"/>
+
+    <!--将C3P0的数据库连接池创建反转给Spring容器管理-->
+    <bean id="c3p0" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="jdbcUrl" value="${url}"/>
+        <property name="driverClass" value="${driver}"/>
+        <property name="user" value="${user}"/>
+        <property name="password" value="${password}"/>
+        <property name="initialPoolSize" value="${initPoolSize}"/>
+        <property name="maxPoolSize" value="${maxPoolSize}"/>
+    </bean>
+    <!--Druid 主类名DruidDataSource-->
+    <bean id="druid" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${driver}"/>
+        <property name="url" value="${url}"/>
+        <property name="password" value="${password}"/>
+        <property name="username" value="${user}"/>
+        <property name="initialSize" value="${initPoolSize}"/>
+        <property name="maxActive" value="${maxPoolSize}"/>
+    </bean>
+    <!--dbcp 主类名BasicDataSource-->
+    <bean id="dbcp" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="${driver}"/>
+        <property name="url" value="${url}"/>
+        <property name="password" value="${password}"/>
+        <property name="username" value="${user}"/>
+        <property name="initialSize" value="${initPoolSize}"/>
+        <property name="maxActive" value="${maxPoolSize}"/>
+    </bean>
+
+    <!--Spring为持久层提供了解决方案:SpringJDBC(小型的ORM框架)
+        导入Spring-jdbc jar包 Spring-tx jar包-->
+    <bean id="jdbc" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="c3p0"/>
+    </bean>
+
+
+</beans>
