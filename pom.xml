@@ -14,6 +14,7 @@
         <module>AppDemo02</module>
         <module>Spring03</module>
         <module>SpringDemo01</module>
+        <module>ProxyDemo</module>
     </modules>
     <packaging>pom</packaging>
     <name>MySpring</name>
