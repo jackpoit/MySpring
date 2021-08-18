@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
  */
 public class LoginInterceptor implements HandlerInterceptor {
 
+	//先拦截 可以避免404 是对过滤器的优化
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		request.setCharacterEncoding("text/html;charset=utf-8");
