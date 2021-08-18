@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!--开启IOC注解扫描-->
+     <context:component-scan base-package="com.woniuxy.controller"/>
+
+    <!--配置SpringMVC对静态资源的方向-->
+    <mvc:default-servlet-handler/>
+
+    <!--开启注解驱动:装配处理器映射器,处理器适配器,初始化类型转换器格式化工厂-->
+    <mvc:annotation-driven />
+
+    <!--配置默认的视图解析器
+            逻辑视图名=>物理视图名-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!--配置格式化转换服务工厂-->
+<!--    <mvc:annotation-driven conversion-service="conversionService"/>-->
+<!--    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">-->
+<!--        &lt;!&ndash;自定义转换器&ndash;&gt;-->
+<!--        <property name="converters">-->
+<!--            <set>-->
+<!--                <bean class="com.woniuxy.converters.DateConverter"/>-->
+<!--            </set>-->
+<!--        </property>-->
+<!--    </bean>-->
+
+
+</beans>

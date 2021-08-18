@@ -7,6 +7,7 @@
     <!--通过setXxx来注入高级类型-->
     <bean id="bean" class="com.woniuxy.entity.Bean">
         <!--数组的注入-->
+
         <property name="arr">
             <array>
                 <value>woniu</value>

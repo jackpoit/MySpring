@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd
+         http://www.springframework.org/schema/aop
+        https://www.springframework.org/schema/aop/spring-aop.xsd
+         http://www.springframework.org/schema/tx
+        https://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!--通过上下文加载属性文件
+        注意要加classpath
+    -->
+    <context:property-placeholder location="classpath:db.properties"/>
+    <context:component-scan base-package="com.woniuxy"/>
+
+
+    <!--Druid 主类名DruidDataSource-->
+    <bean id="druid" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${driver}"/>
+        <property name="url" value="${url}"/>
+        <property name="password" value="${password}"/>
+        <property name="username" value="${user}"/>
+        <property name="initialSize" value="${initPoolSize}"/>
+        <property name="maxActive" value="${maxPoolSize}"/>
+    </bean>
+
+    <!--Spring为持久层提供了解决方案:SpringJDBC(小型的ORM框架)
+        导入Spring-jdbc jar包 Spring-tx jar包-->
+    <bean id="jdbc" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="druid"/>
+    </bean>
+
+
+    <!--搭建Spring管理事务的平台管理器[事务管理的都是连接对象,而连接对象又在连接池中]-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="druid"/>
+    </bean>
+
+    <!--基于注解的声明式事务(编程式事务繁琐,不用) 本质扫描的是spring容器中@Transactional注解-->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+
+
+</beans>

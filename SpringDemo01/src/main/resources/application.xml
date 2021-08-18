@@ -18,6 +18,6 @@
     <bean id="user" class="com.woniuxy.bean.User" scope="prototype"  init-method="init" destroy-method="destroy">
     </bean>
 
-<!--    <bean id="user2" class="com.woniuxy.bean.User"/>-->
+<!--    <bean id="user2" class="com.woniuxy.bean.com.woniuxy.entity.User"/>-->
 
 </beans>

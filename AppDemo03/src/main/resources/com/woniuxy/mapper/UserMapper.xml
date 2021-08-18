@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.woniuxy.mapper.UserMapper">
+<!--  private Integer id;
+    private String userName;
+    private String userPass;
+    private String userPhone;
+    private String userType;-->
+    <resultMap id="basemap" type="com.woniuxy.bean.User">
+        <id property="id" column="id"/>
+        <result property="userName" column="user_name"/>
+        <result property="userPass" column="user_pass"/>
+        <result property="userPhone" column="user_phone"/>
+        <result property="userType" column="user_type"/>
+    </resultMap>
+
+    <sql id="baseCol" >
+        id,user_name,user_pass,user_phone,user_type
+    </sql>
+    <!--List<User> findByCondition(User user);-->
+    <select id="findByCondition" parameterType="com.woniuxy.bean.User" resultMap="basemap">
+        SELECT
+        <include refid="baseCol"/>
+        FROM users
+        <where>
+            <if test="id != null">
+                AND id=#{id}
+            </if>
+            <if test="userName != null and userName != ''">
+                AND user_name=#{userName}
+            </if>
+            <if test="userPass != null and userPass != ''">
+                AND user_pass=#{userPass}
+            </if>
+            <if test="userPhone != null and userPhone != ''">
+                AND user_phone=#{userPhone}
+            </if>
+            <if test="userType != null ">
+                AND user_type=#{userType}
+            </if>
+        </where>
+    </select>
+
+</mapper>

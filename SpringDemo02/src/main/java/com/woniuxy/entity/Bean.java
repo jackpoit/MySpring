@@ -17,9 +17,10 @@ import java.util.Set;
 /**
  * 验证高级类型的DI注入[通过set方法注入]
  */
-@Data
+
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
 public class Bean {
 	private String[] arr;
 	private ArrayList<Integer> lists;

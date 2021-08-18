@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!--配置处理器映射器-->
+    <bean id="beanNameUrlHandlerMapping" class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>
+
+    <!--将处理器交给SpringMVC管理  路由默认映射规则:BeanNameUrlHandlerMapping-->
+    <bean id="/test" class="com.woniuxy.controller.TestController"/>
+
+    <!--配置SpringMVC对静态资源的方向
+        遇到静态资源时不拦截,自动交给tomcat处理-->
+    <mvc:default-servlet-handler/>
+
+    <!--配置默认的视图解析器
+            逻辑视图名=>物理视图名-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/"/>
+        <property name="suffix" value=".html"/>
+
+    </bean>
+</beans>

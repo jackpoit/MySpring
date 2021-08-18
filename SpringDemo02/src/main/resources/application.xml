@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:p="http://www.springframework.org/schema/p"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         https://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <!--将Employee创建交给Spring   IOC过程-->
 
+    <!-- DI注入方式三:P命名空间注入(本质还是setXXXX)-->
 
+    <!-- DI注入方式4:SpringEL表达式注入
+            int型:#{10}
+            string类型的属性   :      "#{'admin'}"
+            引用类型:也用value不用ref了 不加单引号#{dept}
+        可用函数和判断
+    -->
 
     <!-- !!!!!!DI注入方式二:[开发主流:通过setXxxx注入属性的值]-->
 
@@ -27,27 +35,28 @@
             ref引用-->
         <property name="dept" ref="dept"/>
 
-<!--        &lt;!&ndash;通过内部bean来配置  只能emp使用 [有缺陷]&ndash;&gt;-->
-<!--        <property name="dept">-->
-<!--            <bean class="com.woniuxy.entity.Department">-->
-<!--                <property name="id" value="2"/>-->
-<!--                <property name="dname" value="市场部"/>-->
-<!--                <property name="zone" value="华东区"/>-->
-<!--            </bean>-->
-<!--        </property>-->
+        <!--        通过内部bean来配置  只能emp使用 [有缺陷]&ndash;&gt;-->
+        <!--        <property name="dept">-->
+        <!--            <bean class="com.woniuxy.entity.Department">-->
+        <!--                <property name="id" value="2"/>-->
+        <!--                <property name="dname" value="市场部"/>-->
+        <!--                <property name="zone" value="华东区"/>-->
+        <!--            </bean>-->
+        <!--        </property>-->
     </bean>
 
 
     <!--    <bean id="emp" class="com.woniuxy.entity.Employee">-->
-    <!--        &lt;!&ndash;DI注入方式一:通过构造函数来注入属性[冷门注入:开发基本不用]&ndash;&gt;-->
+
+    <!--       DI注入方式一:通过构造函数来注入属性[冷门注入:开发基本不用]-->
     <!--        <constructor-arg index="0" value="10"/>-->
     <!--        <constructor-arg index="1" value="admin"/>-->
     <!--        <constructor-arg index="2" value="男"/>-->
     <!--    </bean>-->
 
-    <!--    &lt;!&ndash;将Employee创建交给Spring   IOC过程&ndash;&gt;-->
+    <!--    将Employee创建交给Spring   IOC过程&ndash;&gt;-->
     <!--    <bean id="emp2" class="com.woniuxy.entity.Employee">-->
-    <!--        &lt;!&ndash;name属性绑定的是形参变量名 不是属性名&ndash;&gt;-->
+    <!--        name属性绑定的是形参变量名 不是属性名&ndash;&gt;-->
     <!--        <constructor-arg name="ids" value="10"/>-->
     <!--        <constructor-arg name="name" value="admin"/>-->
     <!--        <constructor-arg name="gender" value="男"/>-->

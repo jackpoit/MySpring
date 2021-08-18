@@ -18,7 +18,7 @@
         <property name="id" value="200"/>
         <property name="brand" value="奔驰"/>
     </bean>
-<!--    <bean id="user" class="com.woniuxy.entity.User">-->
+<!--    <bean id="user" class="com.woniuxy.entity.com.woniuxy.entity.User">-->
 <!--        <property name="id" value="1"/>-->
 <!--        <property name="uname" value="张三"/>-->
 <!--        <property name="car" ref="car"/>-->

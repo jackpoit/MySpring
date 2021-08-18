@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd
+         http://www.springframework.org/schema/aop
+        https://www.springframework.org/schema/aop/spring-aop.xsd
+         http://www.springframework.org/schema/tx
+        https://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!--通过上下文加载属性文件
+        注意要加classpath
+    -->
+    <context:property-placeholder location="classpath:db.properties"/>
+    <context:component-scan base-package="com.woniuxy"/>
+
+
+    <!--Druid 主类名DruidDataSource-->
+    <bean id="druid" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${driver}"/>
+        <property name="url" value="${url}"/>
+        <property name="password" value="${password}"/>
+        <property name="username" value="${user}"/>
+        <property name="initialSize" value="${initPoolSize}"/>
+        <property name="maxActive" value="${maxPoolSize}"/>
+    </bean>
+
+    <!--Spring为持久层提供了解决方案:SpringJDBC(小型的ORM框架)
+        导入Spring-jdbc jar包 Spring-tx jar包-->
+    <bean id="jdbc" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="druid"/>
+    </bean>
+
+
+    <!--搭建Spring管理事务的平台管理器[事务管理的都是连接对象,而连接对象又在连接池中]-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="druid"/>
+    </bean>
+
+
+    <!--<tx:attributes>:配置事务的属性
+             isolation="DEFAULT":数据库默认隔离级别(一般不改)
+             propagation:"REQUIRED":事务的传播行为(默认值,行为7种,常用的就2中REQUIRED,REQUIRES_NEW
+             read-only="true":只读属性:一般用在查询语句中[建议查询语句写上,数据库会自动优化该查询语句的编译]
+             timeout="-1":超时属性(默认-1 永不超时),规定时间内需要完成该事务,若超时还未完成事务,则强制回滚
+    -->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes> <!--配置事务的属性-->
+            <tx:method name="add*" isolation="DEFAULT" propagation="REQUIRES_NEW"/>
+            <tx:method name="save*" isolation="DEFAULT" propagation="REQUIRES_NEW"/>
+            <tx:method name="update*"/>
+            <tx:method name="find*" read-only="true" timeout="-1"/>
+            <tx:method name="query*" read-only="true"/>
+            <tx:method name="transferMoney*" isolation="DEFAULT" propagation="REQUIRED"/>
+            <tx:method name="update*"/>
+
+            <tx:method name="purchase" propagation="REQUIRED"/>
+            <!--            <tx:method name="purchase" propagation="REQUIRES_NEW"/>-->
+            <tx:method name="checkout" propagation="REQUIRES_NEW"/>
+
+
+        </tx:attributes>
+    </tx:advice>
+    <!--真正使用AOP来完成事务管理:找切入点,将切入点交给Spring提供的事务平台管理器来管理事务-->
+    <aop:config>
+        <!--        <aop:pointcut id="Service" expression="execution(* com.woniuxy.service.impl.*ServiceImpl.*(..))"/>-->
+        <aop:pointcut id="Service" expression="execution(* com.woniuxy.service..*.*(..))"/>
+        <aop:pointcut id="transferMoney"
+                      expression="execution(* com.woniuxy.service.impl.AccountServiceImpl.transferMoney(..))"/>
+
+        <!--将事务通知应用到切入点-->
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="Service"/>
+
+    </aop:config>
+
+
+</beans>
