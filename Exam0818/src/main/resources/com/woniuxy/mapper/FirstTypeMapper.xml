@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.woniuxy.mapper.FirstTypeMapper">
+
+    <resultMap id="basemap" type="com.woniuxy.bean.FirstType">
+        <id property="id" column="id"/>
+        <result property="firstTypeName" column="firstTypeName"/>
+    </resultMap>
+
+    <sql id="baseCol">
+        id,firstTypeName
+    </sql>
+
+    <!--    1.FirstType findById(Integer id);-->
+    <select id="findById" resultMap="basemap">
+        SELECT id,firstTypeName
+        FROM firsttype
+        WHERE id=#{value}
+    </select>
+
+
+    <!--    2.List<FirstType> findAll();-->
+    <select id="findAll" resultMap="basemap">
+        SELECT id,firstTypeName
+        FROM firsttype
+    </select>
+
+</mapper>

@@ -17,6 +17,8 @@
     <title>Title</title>
 </head>
 <body>
-<h1>success</h1>
+<h1>WEB-INF:success</h1>
+msg:${msg}
+
 </body>
 </html>

@@ -19,18 +19,23 @@ import java.util.List;
 @RequestMapping("test")
 public class AjaxController {
 
-//	@ResponseBody
+//	@ResponseBody //不会以视图解析器方式来运行,以正常文档流方式来
+//	(同步异步都可以,只不过同步会把返回的内容直接输出到页面)
 	@RequestMapping("ajax1")
 	public String testAjax1(){
+		int a=10/0;
+
 		//返回字符串不会转成json 前端也不能用dataType:json去接收
 		int row=1;
 		return row==0?"ok":"no";
 	}
+
 //	@ResponseBody
 	@RequestMapping("ajax2")
 	public User testAjax2(){
 		return new User(1,"jack","杰克");
 	}
+
 //	@ResponseBody
 	@RequestMapping("ajax3")
 	public List<User> testAjax3(){

@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <script type="text/javascript" src="script/jquery-3.5.1.js"></script>
+    <script src="script/jquery-3.5.1.js"></script>
+    <style type="text/css">
+
+        .ul-li-1{
+            background: gray;
+        }
+        .ul-li-1 li{
+            line-height:23px;
+        }
+        .ul-li-1 li a {
+            font-size: 12px;
+            color: white;
+        }
+    </style>
+
+</head>
+<body>
+<div id="goodIndex">
+<!--1.登录模态框-->
+<div id="loginModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">用户登录</h4>
+            </div>
+            <div class="media-body">
+                <form class="form-inline text-center" id="loginForm">
+                    <p>
+                        用户名:<input type="text" name="userName" class="form-control" placeholder="请输入用户名" pattern="^[a-zA-Z0-9]{3,6}$" msg="3-6位字母数字组成">
+                        <span style="color: red">*</span>
+                    </p>
+                    <p>
+                        密　码:<input type="text" name="userPass" class="form-control" placeholder="请输入密码">
+                    </p>
+
+                    <p>
+                        <button type="button" class="btn btn-primary" onclick="doLogin()">确认登录</button>
+                        <button type="button" class="btn btn-primary"  data-dismiss="modal">返回首页</button>
+                    </p>
+                </form>
+                <script>
+                    function doLogin() {
+                        $.ajax({
+                            url: 'user/login',
+                            dataType: 'text',
+                            type: 'post',
+                            data: $('#loginForm').serialize(),
+                            success: function (text) {
+                                if ('Y' == text) {
+                                    alert("登陆成功");
+                                    // location.href = "success.html"
+                                } else if ('N' == text) {
+                                    alert("登陆失败");
+                                }
+                                $('#loginModal').modal('hide')
+                            }
+                        })
+                    }
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
+<!--2. 注册模态框-->
+<div id="regModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">用户注册</h4>
+            </div>
+            <div class="media-body">
+                <form class="form-inline text-center" id="regForm">
+                    <p>
+                        <img src="images/user/5.jpg" width="100px" class="img-circle">
+                    </p>
+                    <p>
+                        用户名:<input type="text" name="userName" class="form-control" placeholder="请输入用户名" required pattern="^[a-zA-Z0-9]{3,6}$" msg="3-6位字母数字组成">
+                        <span style="color: red">*</span>
+                    </p>
+                    <p>
+                        密　码:<input type="text" name="userPass" class="form-control" placeholder="请输入密码" required pattern="^[0-9]{6}$" msg="6位数字组成">
+                        <span style="color: red">*</span>
+                    </p>
+                    <p>
+                        手机号:<input type="text" name="userPhone" class="form-control" placeholder="请输入手机号码" required pattern="^[0-9]{11}$" msg="11位手机号码">
+                        <span style="color: red">*</span>
+                    </p>
+
+                    <p>
+                        <button type="button" class="btn btn-primary submit"  onclick="deRegister()">确认添加</button>
+                        <button type="button" class="btn btn-primary"  data-dismiss="modal">返回首页</button>
+                    </p>
+                </form>
+                <script>
+                    function deRegister() {
+                        $.ajax({
+                            url: 'user/register',
+                            dataType: 'text',
+                            type: 'post',
+                            data: $('#regForm').serialize(),
+                            success: function (text) {
+                                if ('Y' == text) {
+                                    alert("注册成功");
+                                    // location.href = "success.html"
+                                } else if ('N' == text) {
+                                    alert("注册失败");
+                                }
+                                $('#regModal').modal('hide')
+                            }
+                        })
+                    }
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid " style="line-height: 50px;background: black">
+    <div class="row user-head-1">
+        <div class="navbar-left col-md-3 text-center" style="color:white;"><img src="images/user/5.jpg" width="40px" class="img-circle">:　charles</div>
+        <div class="col-md-6 navbar-right text-right">
+            <a href="javascript:void(0)" class="btn btn-primary" data-toggle="modal" data-target="#loginModal"><span class="glyphicon glyphicon-log-in"></span> 登录</a>
+            <a href="javascript:void(0)" data-toggle="modal" data-target="#regModal" class="btn btn-info"><span class="glyphicon glyphicon-plus"></span> 注册</a>
+        </div>
+    </div>
+</div>
+<div class="container" style="margin-top: 20px">
+    <div class="row" style="line-height:50px">
+        <div class="col-md-1" >
+            <img src="images/logo.jpg" width="100px"  height="50px">
+        </div>
+        <div class="col-md-8">
+            <ul class="nav nav-justified nav-title-1 secondLi">
+                <li><a href="#">蜗牛 X</a></li>
+                <li><a href="#">蜗牛 Plus</a></li>
+                <li><a href="#">电视</a></li>
+                <li><a href="#">笔记本</a></li>
+                <li><a href="#">家电</a></li>
+                <li><a href="#">路由器</a></li>
+                <li><a href="#">智能硬件</a></li>
+                <li><a href="#">服务</a></li>
+            </ul>
+        </div>
+
+        <div class="col-md-3">
+            <form class="form-inline" id="searchFormId" >
+                <input type="text" class="form-control" placeholder="请输入关键字" style="width: 160px;">
+                <a href="page/user/list.html" target="showFrame" class="btn btn-primary">搜索</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+    <div class="container">
+        <div class="row" style="margin-top: 30px">
+            <div class="col-md-2">
+                <ul class="nav nav-stacked ul-li-1 text-center" id="firstNavId">
+                    <li><a href="#">手机丶电话卡</a></li>
+                    <li><a href="#">手机丶电话卡</a></li>
+                    <li><a href="#">手机丶电话卡</a></li>
+                    <li><a href="#">手机丶电话卡</a></li>
+                    <li><a href="#">手机丶电话卡</a></li>
+                    <li><a href="#">手机丶电话卡</a></li>
+                    <li><a href="#">手机丶电话卡</a></li>
+                    <li><a href="#">手机丶电话卡</a></li>
+                </ul>
+            </div>
+            <div class="col-md-10" style="margin-left: -24px;position: relative">
+                <div id="myCarousel" class=" carousel slide " >
+                    <!-- 轮播（Carousel）指标 -->
+                    <ol class="carousel-indicators">
+                        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                        <li data-target="#myCarousel" data-slide-to="1"></li>
+                        <li data-target="#myCarousel" data-slide-to="2"></li>
+                    </ol>
+                    <!-- 轮播（Carousel）项目 -->
+                    <div class="carousel-inner">
+                        <div class="item active">
+                            <img src="images/goods/bg1.jpg" alt="First slide">
+                        </div>
+                        <div class="item">
+                            <img src="images/goods/bg2.jpg" alt="Second slide">
+                        </div>
+                        <div class="item">
+                            <img src="images/goods/bg3.jpg" alt="Third slide">
+                        </div>
+                    </div>
+                    <!-- 轮播（Carousel）导航 -->
+                    <a class="carousel-control left" href="#myCarousel" data-slide="prev" style="display:flex;align-items:center;justify-content:center;font-size:30px">&laquo;</a>
+                    <a class="carousel-control right" href="#myCarousel"  data-slide="next" style="display:flex;align-items:center;justify-content:center;font-size:30px">&raquo;</a>
+                </div>
+            </div>
+
+        </div>
+        <h2>热门商品</h2>
+        <div class="row text-center" style="margin-top: 20px">
+            <div class="col-md-3 table-bordered">
+                <a href="detail.html" style="text-decoration: none" target="showFrame">
+                    <img src="images/goods/1.jpg" width="200px" style="margin-top: 20px">
+                    <p style="color: gray">蜗牛10plus</p>
+                    <p style="color: orangered">价格:1999.99元</p>
+                </a>
+            </div>
+            <div class="col-md-3 table-bordered">
+                <a href="detail.html" style="text-decoration: none" target="showFrame">
+                    <img src="images/goods/2.jpg" width="200px" style="margin-top: 20px">
+                    <p style="color: gray">蜗牛10plus</p>
+                    <p style="color: orangered">价格:1999.99元</p>
+                </a>
+            </div>
+            <div class="col-md-3 table-bordered">
+                <a href="detail.html" style="text-decoration: none" target="showFrame">
+                    <img src="images/goods/3.jpg" width="200px" style="margin-top: 20px">
+                    <p style="color: gray">蜗牛10plus</p>
+                    <p style="color: orangered">价格:1999.99元</p>
+                </a>
+            </div>
+            <div class="col-md-3 table-bordered">
+                <a href="detail.html" style="text-decoration: none" target="showFrame">
+                    <img src="images/goods/4.jpg" width="200px" style="margin-top: 20px">
+                    <p style="color: gray">蜗牛10plus</p>
+                    <p style="color: orangered">价格:1999.99元</p>
+                </a>
+            </div>
+            <div class="col-md-3 table-bordered">
+                <a href="detail.html" style="text-decoration: none" target="showFrame">
+                    <img src="images/goods/5.jpg" width="200px" style="margin-top: 20px">
+                    <p style="color: gray">蜗牛10plus</p>
+                    <p style="color: orangered">价格:1999.99元</p>
+                </a>
+            </div>
+            <div class="col-md-3 table-bordered">
+                <a href="detail.html" style="text-decoration: none" target="showFrame">
+                    <img src="images/goods/6.jpg" width="200px" style="margin-top: 20px">
+                    <p style="color: gray">蜗牛10plus</p>
+                    <p style="color: orangered">价格:1999.99元</p>
+                </a>
+            </div>
+            <div class="col-md-3 table-bordered">
+                <a href="detail.html" style="text-decoration: none" target="showFrame">
+                    <img src="images/goods/2.jpg" width="200px" style="margin-top: 20px">
+                    <p style="color: gray">蜗牛10plus</p>
+                    <p style="color: orangered">价格:1999.99元</p>
+                </a>
+            </div>
+            <div class="col-md-3 table-bordered">
+                <a href="detail.html" style="text-decoration: none" target="showFrame">
+                    <img src="images/goods/3.jpg" width="200px" style="margin-top: 20px">
+                    <p style="color: gray">蜗牛10plus</p>
+                    <p style="color: orangered">价格:1999.99元</p>
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <ul class="pagination">
+                    <li><a href="#">&laquo;</a></li>
+                    <li><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">&raquo;</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+    <script type="text/javascript" src="script/bootstrap.js"></script>
+<script type="text/javascript" src="script/vue.js"></script>
+<script type="text/javascript">
+    let vue = new Vue({
+        el: "#goodIndex",
+        data: {
+            goodList: [],
+            pageList: [],
+            updateGood: {},
+            good: {nowPage: ""},
+            ids: [],
+            totalPage: 0,
+            currentPage: 1,
+            firstList:[],
+            secondList:[],
+        }, methods: {
+            queryGood(nowPage) {
+                $('#nowPage').val(nowPage)
+                $.ajax({
+                    url: "good/query",
+                    dataType: "json",
+                    type: "get",
+                    data: $("#searchFormId").serialize(),
+                    success: (info) => {
+                        this.goodList = info.list;
+                        this.pageList = info.navigatepageNums;
+                        this.totalPage = info.pages;
+                        this.currentPage = info.pageNum;
+                    }
+                });
+            }, showGood(index) {
+                this.updateGood = this.goodList[index];
+            }, changePage(nowPage) {
+                this.queryGood(nowPage);
+            }, prevPage(num) {
+                if (num == 1) {
+                    num = this.totalPage;
+                } else {
+                    num = num - 1;
+                }
+                this.queryGood(num)
+            }, nextPage(num) {
+                if (num == this.totalPage) {
+                    num = 1;
+                } else {
+                    num = num + 1;
+                }
+                this.queryGood(num)
+            }, searchGood() {
+                this.queryGood(1);
+            }, addGood() {
+                $.ajax({
+                    url: "good/add",
+                    data: new FormData($("#addFormId")[0]),
+                    dataType: "text",
+                    type: "post",
+                    processData: false,
+                    contentType: false,
+                    success: (text) => {
+                        if ("Y" == text) {
+                            alert("添加成功")
+                            this.queryGood(this.currentPage);
+                        } else if ("N" == text) {
+                            alert("添加失败")
+                        }
+                        $('#addModal').modal('hide');
+                    }
+                })
+            }, toUpdateGood() {
+                $.ajax({
+                    url: "good/update",
+                    dataType: "text",
+                    type: "post",
+                    processData: false,
+                    contentType: false,
+                    data: new FormData($("#updateFormId")[0]),
+                    success: (text) => {
+                        if ("Y" == text) {
+                            alert("修改成功")
+                            this.queryGood(this.currentPage);
+                        } else if ("N" == text) {
+                            alert("修改失败")
+                        }
+                        $('#updateModal').modal('hide');
+                    }
+                })
+            }, checkBoxClick() {
+                let $checkApp = $('input[name="sel"]');
+                let total = $('input[name="sel"]').length;
+                $('#all').prop("checked", false);
+                $checkApp.prop("checked", false);
+
+                //全选全消
+                $('#all').click(function () {
+                    let flag = this.checked;
+                    $checkApp.prop("checked", flag);
+                });
+                $checkApp.click(function () {
+                    let count = $('input[name="sel"]').filter(":checked").length;
+                    $('#all').prop("checked", count === total);
+                });
+            }, deleteAjax(ids) {
+                $.ajax({
+                    url: "good/delete",
+                    type: "post",
+                    traditional: "true",//数组选项
+                    data: {ids: ids},
+                    dataType: "text",
+                    success: (text) => {
+                        if ("Y" == text) {
+                            alert("删除成功")
+                            this.queryGood(this.currentPage);
+                        } else if ("N" == text) {
+                            alert("删除失败")
+                        }
+                    }
+                })
+            }, deleteById(id) {
+                let flag = confirm("您确认要删除" + id + "号商品吗?");
+                if (flag) {
+                    this.deleteAjax(id);
+                }
+            }, deleteAll() {
+                let $ids = $('input[name="sel"]').filter(":checked")
+                if ($ids.length === 0) {
+                    alert("没有选择的商品")
+                    return;
+                }
+                let ids = [];
+                let idStr = "";
+                for (let i = 0; i < $ids.length; i++) {
+                    ids[i] = $ids.eq(i).val();
+                    idStr += ids[i];
+                    if (i != $ids.length - 1) {
+                        idStr += ",";
+                    }
+                }
+                let flag = confirm("您确认要删除" + idStr + "号商品吗?");
+                if (flag) {
+                    this.deleteAjax(ids);
+                }
+            },getFirst(){
+                $.ajax({
+                    url:"good/getFirst",
+                    dataType:"json",
+                    type:"get",
+                    success:(list)=>{
+                        this.firstList=list;
+                    }
+                });
+            },getSecond(){
+                $.ajax({
+                    url:"good/getSecond",
+                    dataType:"json",
+                    type:"get",
+                    success:(list)=>{
+                        this.secondList=list;
+                    }
+                });
+            }
+        }, created() { //vue加载完毕之后自动调用此函数
+            this.queryGood(1);//默认打开浏览器 默认查询第一页的数据
+            this.getFirst();
+            this.getSecond();
+        }, updated() {
+            this.checkBoxClick();
+        }
+
+    })
+</script>
+</body>
+</body>
+</html>

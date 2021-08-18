@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/bootstrap.css">
+    <script type="text/javascript" src="../../../script/jquery-3.5.1.js"></script>
+</head>
+<body>
+    <!--1.添加地址管理模态框-->
+    <div id="addAddressModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">添加地址</h4>
+                </div>
+                <div class="media-body">
+                    <form class="form-inline text-center" id="addForm">
+                        <p>
+                            　收货人:<input type="text" name="userName" class="form-control" placeholder="请输入用户名">
+                        </p>
+                        <p>
+                            手机号码:<input type="text" name="userPhone" class="form-control" placeholder="请输入手机号码">
+                        </p>
+                        <p>
+                            邮政编码:<input type="text" name="postalCode" class="form-control" placeholder="请输入邮政编码">
+                        </p>
+
+                        <p>
+                            选择城市:
+                            <select class="form-control province">
+                                <option>请选择省份</option>
+                            </select>
+                            <select class="form-control city">
+                                <option>请选择城市</option>
+                            </select>
+                            <select class="form-control town">
+                                <option>请选择县/区</option>
+                            </select>
+                        </p>
+                        <p>
+                            详细地址:
+                            <textarea class="form-control" cols="50" rows="5" placeholder="详细地址如:xxx号楼xxxx室"></textarea>
+                        </p>
+                        <p>
+                            <button type="button" class="btn btn-primary" >确认添加</button>
+                            <button type="button" class="btn btn-primary"  data-dismiss="modal">返回首页</button>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--修改地址-->
+    <div id="updateAddressModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">修改地址</h4>
+                </div>
+                <div class="media-body">
+                    <form class="form-inline text-center" id="updateForm">
+                        <p>
+                            地址编号:<input type="text" name="addressId" class="form-control" placeholder="请输入编号">
+                        </p>
+                        <p>
+                            　收货人:<input type="text" name="userName" class="form-control" placeholder="请输入用户名">
+                        </p>
+                        <p>
+                            手机号码:<input type="text" name="userPhone" class="form-control" placeholder="请输入手机号码">
+                        </p>
+                        <p>
+                            邮政编码:<input type="text" name="postalCode" class="form-control" placeholder="请输入邮政编码">
+                        </p>
+
+                        <p>
+                            选择城市:
+                            <select class="form-control">
+                                <option>请选择省份</option>
+                            </select>
+                            <select class="form-control">
+                                <option>请选择城市</option>
+                            </select>
+                            <select class="form-control">
+                                <option>请选择县/区</option>
+                            </select>
+                        </p>
+                        <p>
+                            详细地址:
+                            <textarea class="form-control" cols="50" rows="5" placeholder="详细地址如:xxx号楼xxxx室"></textarea>
+                        </p>
+                        <p>
+                            <button type="button" class="btn btn-primary" >确认添加</button>
+                            <button type="button" class="btn btn-primary"  data-dismiss="modal">返回首页</button>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h1 class="text-center">地址管理</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-right">
+                <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#addAddressModal"><span class="glyphicon glyphicon-plus"></span> 添加</a>
+            </div>
+        </div>
+        <div class="row">
+            <table class="col-md-12 table-bordered text-center table" style="margin-top: 20px">
+                <tr style="line-height:60px">
+                    <td>编号</td>
+                    <td>地址信息</td>
+                    <td>详细地址</td>
+                    <td>邮政编号</td>
+                    <td>收货人姓名</td>
+                    <td>手机号码</td>
+                    <td colspan="2">操作</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>上海市浦东新区</td>
+                    <td>张东路2281弄xxx号楼xxxx室</td>
+                    <td>0000</td>
+                    <td>jack</td>
+                    <td>18179160001</td>
+                    <td><a href="javascript:void(0)" class="btn btn-danger" ><span class="glyphicon glyphicon-remove"></span> 删除</a></td>
+                    <td><a href="javascript:void(0)" class="btn btn-info" data-toggle="modal" data-target="#updateAddressModal"><span class="glyphicon glyphicon-edit"></span> 修改</a></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>上海市浦东新区</td>
+                    <td>张东路2281弄xxx号楼xxxx室</td>
+                    <td>0000</td>
+                    <td>marry</td>
+                    <td>18179160001</td>
+                    <td><a href="javascript:void(0)" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> 删除</a></td>
+                    <td><a href="javascript:void(0)" class="btn btn-info" data-toggle="modal" data-target="#updateAddressModal"><span class="glyphicon glyphicon-edit" ></span> 修改</a></td>
+                </tr>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <ul class="pagination">
+                    <li><a href="#">&laquo;</a></li>
+                    <li><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">&raquo;</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="../../../script/bootstrap.js"></script>
+    <!--导入省市区级联的js插件 先导入初始化数据的js文件 -->
+    <script type="text/javascript" src="../../../script/city-info.js"></script>
+    <script type="text/javascript" src="../../../script/city.js"></script>
+</body>
+</html>

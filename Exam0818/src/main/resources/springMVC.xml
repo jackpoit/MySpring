@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context
+                           https://www.springframework.org/schema/context/spring-context.xsd
+                           http://www.springframework.org/schema/mvc
+                           https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!--开启IOC注解扫描-->
+    <context:component-scan base-package="com.woniuxy.controller"/>
+
+    <!--配置SpringMVC对静态资源的方向-->
+    <mvc:default-servlet-handler/>
+
+    <!--开启注解驱动:装配处理器映射器,处理器适配器,初始化类型转换器格式化工厂-->
+    <mvc:annotation-driven conversion-service="conversionService"/>
+
+    <!--配置默认的视图解析器
+            逻辑视图名=>物理视图名-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value=""/>
+        <property name="suffix" value=".html"/>
+    </bean>
+
+    <!--配置一个上传文件的转换器-->
+    <!--配置一个转换器的统一管理-->
+    <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <bean id="fileConverter" class="com.woniuxy.controller.UpFileConverter"/>
+            </set>
+        </property>
+    </bean>
+
+
+    <!--配置支持文件上传-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="10485760"/>
+        <property name="defaultEncoding" value="UTF-8"/>
+    </bean>
+
+<!--    &lt;!&ndash;配置拦截器&ndash;&gt;-->
+<!--    <mvc:interceptors>-->
+<!--        <mvc:interceptor>-->
+<!--            <mvc:mapping path="/**"/>-->
+<!--            <mvc:exclude-mapping path="/index.html"/>-->
+<!--            <mvc:exclude-mapping path="/login"></mvc:exclude-mapping>-->
+<!--            <mvc:exclude-mapping path="/css/*"></mvc:exclude-mapping>-->
+<!--            <mvc:exclude-mapping path="/fonts/*"></mvc:exclude-mapping>-->
+<!--            <mvc:exclude-mapping path="/images/*"></mvc:exclude-mapping>-->
+<!--            <mvc:exclude-mapping path="/script/*"></mvc:exclude-mapping>-->
+<!--            <mvc:exclude-mapping path="/img/*"></mvc:exclude-mapping>-->
+<!--            <bean class="com.woniuxy.intercepter.LoginInterceptor"></bean>-->
+<!--        </mvc:interceptor>-->
+<!--    </mvc:interceptors>-->
+</beans>

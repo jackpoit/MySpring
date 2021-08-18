@@ -12,13 +12,18 @@
         https://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
     <!--开启IOC注解扫描-->
-     <context:component-scan base-package="com.woniuxy.controller"/>
+    <context:component-scan base-package="com.woniuxy.controller,com.woniuxy.view_resoler,com.woniuxy.domain"/>
 
     <!--配置SpringMVC对静态资源的方向-->
     <mvc:default-servlet-handler/>
 
     <!--开启注解驱动:装配处理器映射器,处理器适配器,初始化类型转换器格式化工厂-->
-    <mvc:annotation-driven />
+    <mvc:annotation-driven/>
+
+    <!--配置自定义视图的解析模板[bean名称来解析视图模板]-->
+    <bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+        <property name="order" value="10"/>
+    </bean>
 
     <!--配置默认的视图解析器
             逻辑视图名=>物理视图名-->
@@ -27,16 +32,42 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
-    <!--配置格式化转换服务工厂-->
-<!--    <mvc:annotation-driven conversion-service="conversionService"/>-->
-<!--    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">-->
-<!--        &lt;!&ndash;自定义转换器&ndash;&gt;-->
-<!--        <property name="converters">-->
-<!--            <set>-->
-<!--                <bean class="com.woniuxy.converters.DateConverter"/>-->
-<!--            </set>-->
-<!--        </property>-->
-<!--    </bean>-->
+    <!--配置文件上传的解析器-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="10485760"/> <!--文件上传最大10M-->
+        <property name="defaultEncoding" value="UTF-8"/>
+    </bean>
 
+    <!--配置格式化转换服务工厂-->
+    <!--    <mvc:annotation-driven conversion-service="conversionService"/>-->
+    <!--    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">-->
+    <!--        &lt;!&ndash;自定义转换器&ndash;&gt;-->
+    <!--        <property name="converters">-->
+    <!--            <set>-->
+    <!--                <bean class="com.woniuxy.converters.DateConverter"/>-->
+    <!--            </set>-->
+    <!--        </property>-->
+    <!--    </bean>-->
+
+    <!--配置拦截器Interceptor-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+<!--            <mvc:mapping path="/*"/> &lt;!&ndash; /admin  /admin.do  /admin/test/do(拦不了)&ndash;&gt;-->
+            <mvc:mapping path="/**"/> <!--所有请求-->
+            <mvc:exclude-mapping path="/css/*"/>
+            <mvc:exclude-mapping path="/js/*"/>
+            <mvc:exclude-mapping path="/images/*"/>
+            <mvc:exclude-mapping path="/fonts/*"/>
+            <mvc:exclude-mapping path="/resources/*"/>
+            <mvc:exclude-mapping path="/static/*"/>
+            <bean class="com.woniuxy.interceptor.TestInterceptor"/>
+        </mvc:interceptor>
+
+        <mvc:interceptor>
+            <mvc:mapping path="/user/center"/>
+            <mvc:mapping path="/admin/*"/>
+            <bean class="com.woniuxy.interceptor.LoginInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 
 </beans>

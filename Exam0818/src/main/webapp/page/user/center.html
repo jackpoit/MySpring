@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+    <script type="text/javascript" src="../../script/jquery-3.5.1.js"></script>
+    <style>
+        .ul-nav-1 li a{
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2" style="height: 600px;background: lightgray">
+                <div class="nav" style="margin-top: 150px">
+                    <ul class="ul-nav-1 nav text-center">
+                        <li><a href="center/edit.html"  target="showCenterFrame">编辑资料</a></li>
+                        <li><a href="center/order.html" target="showCenterFrame">订单管理</a></li>
+                        <li><a href="center/address.html" target="showCenterFrame">地址管理</a></li>
+                        <li><a href="center/comment.html" target="showCenterFrame">添加评论</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-10">
+                <iframe src="center/edit.html" name="showCenterFrame" scrolling="no" width="100%" height="600px" frameborder="0"></iframe>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="text/javascript" src="../../script/bootstrap.js"></script>
+</body>
+</html>

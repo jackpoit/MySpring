@@ -25,6 +25,7 @@ public class User implements Serializable {
 	private String realname;//真实姓名
 	private String pwd;//真实姓名
 	private Integer gender;//0:男 1:女
+	private Integer status;//权限码
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd") //在封装birthday是会自动使用自带的转换器来转换类型
 	private Date birthday; //生日

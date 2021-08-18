@@ -22,6 +22,18 @@
 <span id="s2">发送ajax字符串请求</span><br>
 <span id="s3">发送get异步请求</span><br>
 <span id="s4">测试开发专用ajax接收及返回json处理</span><br>
+<a href="test/ajax1">测试同步请求</a>
+
+<a href="view/login">登录</a>
+<a href="view/register">注册</a>
+
+<hr>
+<a href="excel/download_excel">下载excel表格</a>
+<a href="view/fileupload">测试文件上传</a>
+
+<hr>
+<a href="exp/test">测试SpringMVC对异常的处理</a>
+
 
 <script>
     //先让页面加载,加载完执行此脚本

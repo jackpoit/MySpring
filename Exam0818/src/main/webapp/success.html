@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="GBK">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <script type="text/javascript" src="script/jquery-3.5.1.js"></script>
+    <script type="text/javascript" src="script/showImg.js"></script>
+    <style type="text/css">
+        #addForm input, #updateForm input {
+            width: 50%;
+        }
+
+        #addForm, #updateForm {
+            padding: 20px 0px;
+        }
+
+        #addForm p, #updateForm p {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<div id="good">
+    <!--1.添加模态框-->
+    <div id="addModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">添加商品</h4>
+                </div>
+                <div class="media-body">
+                    <form class="form-inline text-center" id="addFormId">
+                        <p>
+                            <img src="images/good/5.jpg" width="100px" id="addImg">
+                        </p>
+                        <p>
+                            　商品名:<input type="text" name="goodsName" class="form-control" placeholder="请输入商品名">
+                        </p>
+                        <p>
+                            商品数量:<input type="text" name="goodsCount" class="form-control" placeholder="请输入商品数量">
+                        </p>
+                        <p>
+                            分类一:&nbsp;
+                            <select name="goodsFirstId" class="form-control" style="width: 50%">
+                                <option value="0">请选择分类一</option>
+                                <option v-for="firstType in firstList" :value="firstType.id">{{firstType.firstTypeName}}</option>
+                            </select>
+                        </p>
+                        <p>
+                            分类二:&nbsp;
+                            <select name="goodsSecondId" class="form-control" style="width: 50%">
+                                <option value="0">请选择分类二</option>
+                                <option v-for="secondType in secondList" :value="secondType.id">{{secondType.secondTypeName}}</option>
+                            </select>
+                        </p>
+                        <p>
+                            商品价格:<input type="text" name="goodsPrice" class="form-control" placeholder="请输入商品价格">
+                        </p>
+                        <p>
+                            商品图片:<input type="file" name="goodsImg" class="form-control" onchange="getImg(this,addImg)">
+                        </p>
+                        <p>
+                            <button type="button" class="btn btn-primary" @click="addGood()">确认添加</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">返回首页</button>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--2.修改模态框-->
+    <div id="updateModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">修改商品</h4>
+                </div>
+                <div class="media-body">
+                    <form class="form-inline text-center" id="updateFormId">
+                        <p>
+                            <img :src="updateGood.goodsImg" width="100px">
+                        </p>
+                        <p>
+                            　编　号:<input type="text" name="id" :value="updateGood.id" class="form-control" placeholder="请输入商品编号" readonly>
+                        </p>
+                        <p>
+                            　商品名:<input type="text" name="goodsName" :value="updateGood.goodsName" class="form-control" placeholder="请输入商品名">
+                        </p>
+                        <p>
+                            分类一:&nbsp;
+                            <select name="goodsFirstId"  :value="updateGood.goodsFirstId" class="form-control" style="width: 50%">
+                                <option value="0">请选择分类一</option>
+                                <option v-for="firstType in firstList" :value="firstType.id">{{firstType.firstTypeName}}</option>
+                            </select>
+                        </p>
+                        <p>
+                            分类二:&nbsp;
+                            <select name="goodsSecondId"  :value="updateGood.goodsSecondId" class="form-control" style="width: 50%">
+                                <option value="0">请选择分类二</option>
+                                <option v-for="secondType in secondList" :value="secondType.id">{{secondType.secondTypeName}}</option>
+                            </select>
+                        </p>
+                        <p>
+                            商品数量:<input type="text" name="goodsCount" :value="updateGood.goodsCount" class="form-control" placeholder="请输入商品数量">
+                        </p>
+                        <p>
+                            商品价格:<input type="text" name="goodsPrice" :value="updateGood.goodsPrice" class="form-control" placeholder="请输入商品价格">
+                        </p>
+                        <p>
+                            商品图片:<input type="file" name="goodsImg" class="form-control">
+                        </p>
+                        <p>
+                            <button type="button" class="btn btn-primary" @click="toUpdateGood">确认添加</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">返回首页</button>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="h1 text-center">蜗牛商城后台管理系统</div>
+    <!--4.主体内容-->
+    <div class="container">
+        <div class="row" style="line-height: 60px">
+            <form class="col-md-8 form-inline " id="searchFormId">
+                <input type="hidden" name="nowPage" id="nowPage">
+
+                商品名称:
+                <input type="text" name="goodsName" placeholder="请输入商品名称" class="form-control" style="width:140px">
+                　分类一:
+                <select name="goodsFirstId" class="form-control" style="width:140px">
+                    <option value="0">请选择分类一</option>
+                    <option v-for="firstType in firstList" :value="firstType.id">{{firstType.firstTypeName}}</option>
+                </select>
+                分类二:
+                <select name="goodsSecondId" class="form-control" style="width:140px">
+                    <option value="0">请选择分类二</option>
+                    <option v-for="secondType in secondList" :value="secondType.id">{{secondType.secondTypeName}}</option>
+                </select>
+                <button type="button" class="btn btn-primary" @click="searchGood"><span class="glyphicon glyphicon-search"></span>搜索
+                </button>
+            </form>
+
+            <div class="navbar-right text-right" style="margin-right: 20px">
+                <button type="button" class="btn btn-warning" @click="deleteAll"><span class="glyphicon glyphicon-remove-sign"></span>批量删除
+                </button>
+                <button type="button" class="btn btn-info " data-toggle="modal" data-target="#addModal"><span
+                        class="glyphicon glyphicon-plus"></span>添加
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <table class="col-md-12 table-bordered text-center table-hover">
+                <tr style="line-height:60px">
+                    <td><input type="checkbox" id="all">全选/全消</td>
+                    <td>编号</td>
+                    <td>商品名称</td>
+                    <td>商品数量</td>
+                    <td>商品价格</td>
+                    <td>商品图片</td>
+                    <td>一级分类</td>
+                    <td>二级分类</td>
+                    <td>状态(0(上架)/1(下架))</td>
+                    <td colspan="2">操作</td>
+                </tr>
+
+                <tr v-for="(good,index) in goodList" :key="index">
+                    <td>选择<input type="checkbox"  name="sel" :value="good.id"></td>
+                    <td>{{good.id}}</td>
+                    <td>{{good.goodsName}}</td>
+                    <td>{{good.goodsCount}} 件</td>
+                    <td>{{good.goodsPrice}} 元</td>
+                    <td><img :src="good.goodsImg" width="60px"></td>
+                    <td>{{good.firstType.firstTypeName}}</td>
+                    <td>{{good.secondType.secondTypeName}}</td>
+                    <td v-if="good.goodsStatus==0">上架</td>
+                    <td v-else>下架</td>
+                    <td><button type="button" class="btn btn-danger" @click="deleteById(good.id)"><span class="glyphicon glyphicon-remove"></span>删除</button></td>
+                    <td><button type="button" class="btn btn-primary" @click="showGood(index)" data-toggle="modal" data-target="#updateModal"><span
+                            class="glyphicon glyphicon-pencil"></span>修改</button></td>
+                </tr>
+
+
+            </table>
+        </div>
+        <div class="text-center">
+            <ul class="pagination">
+                <li @click="prevPage(currentPage)"><a href="javascript:void(0)">&laquo;</a></li>
+                <li v-for="page in pageList" @click="changePage(page)"><a href="javascript:void(0)">{{page}}</a></li>
+                <li @click="nextPage(currentPage)"><a href="javascript:void(0)">&raquo;</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="script/bootstrap.js"></script>
+<script type="text/javascript" src="script/vue.js"></script>
+<script type="text/javascript">
+    let vue = new Vue({
+        el: "#good",
+        data: {
+            goodList: [],
+            pageList: [],
+            updateGood: {},
+            good: {nowPage: ""},
+            ids: [],
+            totalPage: 0,
+            currentPage: 1,
+            firstList:[],
+            secondList:[],
+        }, methods: {
+            queryGood(nowPage) {
+                $('#nowPage').val(nowPage)
+                $.ajax({
+                    url: "good/query",
+                    dataType: "json",
+                    type: "get",
+                    data: $("#searchFormId").serialize(),
+                    success: (info) => {
+                        this.goodList = info.list;
+                        this.pageList = info.navigatepageNums;
+                        this.totalPage = info.pages;
+                        this.currentPage = info.pageNum;
+                    }
+                });
+            }, showGood(index) {
+                this.updateGood = this.goodList[index];
+            }, changePage(nowPage) {
+                this.queryGood(nowPage);
+            }, prevPage(num) {
+                if (num == 1) {
+                    num = this.totalPage;
+                } else {
+                    num = num - 1;
+                }
+                this.queryGood(num)
+            }, nextPage(num) {
+                if (num == this.totalPage) {
+                    num = 1;
+                } else {
+                    num = num + 1;
+                }
+                this.queryGood(num)
+            }, searchGood() {
+                this.queryGood(1);
+            }, addGood() {
+                $.ajax({
+                    url: "good/add",
+                    data: new FormData($("#addFormId")[0]),
+                    dataType: "text",
+                    type: "post",
+                    processData: false,
+                    contentType: false,
+                    success: (text) => {
+                        if ("Y" == text) {
+                            alert("添加成功")
+                            this.queryGood(this.currentPage);
+                        } else if ("N" == text) {
+                            alert("添加失败")
+                        }
+                        $('#addModal').modal('hide');
+                    }
+                })
+            }, toUpdateGood() {
+                $.ajax({
+                    url: "good/update",
+                    dataType: "text",
+                    type: "post",
+                    processData: false,
+                    contentType: false,
+                    data: new FormData($("#updateFormId")[0]),
+                    success: (text) => {
+                        if ("Y" == text) {
+                            alert("修改成功")
+                            this.queryGood(this.currentPage);
+                        } else if ("N" == text) {
+                            alert("修改失败")
+                        }
+                        $('#updateModal').modal('hide');
+                    }
+                })
+            }, checkBoxClick() {
+                let $checkApp = $('input[name="sel"]');
+                let total = $('input[name="sel"]').length;
+                $('#all').prop("checked", false);
+                $checkApp.prop("checked", false);
+
+                //全选全消
+                $('#all').click(function () {
+                    let flag = this.checked;
+                    $checkApp.prop("checked", flag);
+                });
+                $checkApp.click(function () {
+                    let count = $('input[name="sel"]').filter(":checked").length;
+                    $('#all').prop("checked", count === total);
+                });
+            }, deleteAjax(ids) {
+                $.ajax({
+                    url: "good/delete",
+                    type: "post",
+                    traditional: "true",//数组选项
+                    data: {ids: ids},
+                    dataType: "text",
+                    success: (text) => {
+                        if ("Y" == text) {
+                            alert("删除成功")
+                            this.queryGood(this.currentPage);
+                        } else if ("N" == text) {
+                            alert("删除失败")
+                        }
+                    }
+                })
+            }, deleteById(id) {
+                let flag = confirm("您确认要删除" + id + "号商品吗?");
+                if (flag) {
+                    this.deleteAjax(id);
+                }
+            }, deleteAll() {
+                let $ids = $('input[name="sel"]').filter(":checked")
+                if ($ids.length === 0) {
+                    alert("没有选择的商品")
+                    return;
+                }
+                let ids = [];
+                let idStr = "";
+                for (let i = 0; i < $ids.length; i++) {
+                    ids[i] = $ids.eq(i).val();
+                    idStr += ids[i];
+                    if (i != $ids.length - 1) {
+                        idStr += ",";
+                    }
+                }
+                let flag = confirm("您确认要删除" + idStr + "号商品吗?");
+                if (flag) {
+                    this.deleteAjax(ids);
+                }
+            },getFirst(){
+                $.ajax({
+                    url:"good/getFirst",
+                    dataType:"json",
+                    type:"get",
+                    success:(list)=>{
+                        this.firstList=list;
+                    }
+                });
+            },getSecond(){
+                $.ajax({
+                    url:"good/getSecond",
+                    dataType:"json",
+                    type:"get",
+                    success:(list)=>{
+                        this.secondList=list;
+                    }
+                });
+            }
+        }, created() { //vue加载完毕之后自动调用此函数
+            this.queryGood(1);//默认打开浏览器 默认查询第一页的数据
+            this.getFirst();
+            this.getSecond();
+        }, updated() {
+            this.checkBoxClick();
+        }
+
+    })
+</script>
+</body>
+</html>

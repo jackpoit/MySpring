@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+    <script type="text/javascript" src="../../script/jquery-3.5.1.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            //JQuery change事件
+            $(".all").change(function(){
+                $("[type=checkbox]").not(".all").each(function () {
+                    $(this).prop("checked",$(".all").prop("checked"));
+                });
+            });
+            //1. 给所有的数字输入框绑定change事件  改变数量总金额也得改变
+            $("[type=number]").change(function(){
+                    let tr=$(this).parent().parent();
+                    let checkbox=tr.find("[type=checkbox]");
+                    let number=parseInt($(this).val());//数量
+                    let price=parseFloat(checkbox.attr("goodsPrice"));//价格
+                    checkbox.val(number*price);//将小计存入 复选框中
+                    //设置小计
+                    tr.find(".amount").html(number*price);
+                    $(".moneyCount span").html(countMoney());
+            });
+            //2.改变复选框也得计算总金额
+            $("[type=checkbox]").change(function () {
+                $(".moneyCount span").html(countMoney());
+            });
+        });
+        //1.计算总金额的函数
+        function  countMoney() {
+            let money=0;
+            $("[type=checkbox]").not(".all").each(function (){
+                if($(this).prop("checked")){
+                    money+=parseFloat($(this).val());
+                }
+            });
+            return money;
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 ">
+                <form class="form-inline">
+                    <p>请选择地址:
+                        <select class="form-control">
+                            <option>请选择地址</option>
+                            <option>上海市浦东新区张江路2281弄xxx楼xxxx号</option>
+                            <option>上海市浦东新区张江路2282弄xxx楼xxxx号</option>
+                            <option>上海市浦东新区张江路2283弄xxx楼xxxx号</option>
+                        </select>
+                    </p>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <table class="col-md-12 table-bordered table-hover text-center">
+                <tr style="line-height:50px" class="success">
+                    <td><input type="checkbox" class="all">全选/全消</td>
+                    <td>商品编号</td>
+                    <td>商品名字</td>
+                    <td>商品价格</td>
+                    <td>数量</td>
+                    <td>图片</td>
+                    <td>小计</td>
+                    <td>移除商品</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" value="999.0" goodsPrice="999.0"></td>
+                    <td>1</td>
+                    <td>蜗牛1s</td>
+                    <td><span class="price">999.0</span> 元</td>
+                    <td><input type="number" value="1" min="1" max="999"></td>
+                    <td><img src="../../images/good/1.jpg" width="100px"></td>
+                    <td><span class="amount">999.0</span>元</td>
+                    <td>
+                        <button type="button" class="del-btn btn btn-danger">
+                            <span class="glyphicon glyphicon-remove"></span>移除
+                        </button>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><input type="checkbox" value="1999.0" goodsPrice="1999.0"></td>
+                    <td>2</td>
+                    <td>蜗牛2s</td>
+                    <td><span class="price">1999.0</span> 元</td>
+                    <td><input type="number" value="1" min="1" max="999"></td>
+                    <td><img src="../../images/good/2.jpg" width="100px"></td>
+                    <td><span class="amount">1999.0</span>元</td>
+                    <td>
+                        <button type="button" class="del-btn btn btn-danger">
+                            <span class="glyphicon glyphicon-remove"></span>移除
+                        </button>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><input type="checkbox" value="2999.0" goodsPrice="2999.0"></td>
+                    <td>3</td>
+                    <td>蜗牛3s</td>
+                    <td><span class="price">2999.0</span> 元</td>
+                    <td><input type="number" value="1" min="1" max="999"></td>
+                    <td><img src="../../images/good/3.jpg" width="100px"></td>
+                    <td><span class="amount">2999.0</span>元</td>
+                    <td>
+                        <button type="button" class="del-btn btn btn-danger">
+                            <span class="glyphicon glyphicon-remove"></span>移除
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" value="3999.0" goodsPrice="3999.0"></td>
+                    <td>4</td>
+                    <td>蜗牛4s</td>
+                    <td><span class="price">3999.0</span> 元</td>
+                    <td><input type="number" value="1" min="1" max="999"></td>
+                    <td><img src="../../images/good/4.jpg" width="100px"></td>
+                    <td><span class="amount">3999.0</span>元</td>
+                    <td>
+                        <button type="button" class="del-btn btn btn-danger">
+                            <span class="glyphicon glyphicon-remove"></span>移除
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="row" style="line-height: 50px;background: lightgray">
+            <div class="col-md-2 navbar-right text-right">
+                <button type="button" class="btn btn-danger ">结算</button>
+            </div>
+            <div class="col-md-8   moneyCount">
+                总计:<span style="color: orangered;font-size: 40px">0</span> 元
+            </div>
+        </div>
+        <h3 style="line-height: 60px">最近购买</h3>
+        <div class="row">
+            <div class="col-md-2 text-center" style="padding:10px">
+                <img src="../../images/good/1.jpg" width="150px" >
+                <p style="color: gray">蜗牛10plus</p>
+                <p style="color: orangered">价格:1999.99元</p>
+            </div>
+            <div class="col-md-2 text-center" style="padding:10px">
+                <img src="../../images/good/2.jpg" width="150px" >
+                <p style="color: gray">蜗牛10plus</p>
+                <p style="color: orangered">价格:1999.99元</p>
+            </div>
+            <div class="col-md-2 text-center" style="padding:10px">
+                <img src="../../images/good/3.jpg" width="150px" >
+                <p style="color: gray">蜗牛10plus</p>
+                <p style="color: orangered">价格:1999.99元</p>
+            </div>
+            <div class="col-md-2 text-center" style="padding:10px">
+                <img src="../../images/good/4.jpg" width="150px" >
+                <p style="color: gray">蜗牛10plus</p>
+                <p style="color: orangered">价格:1999.99元</p>
+            </div>
+
+            <div class="col-md-2 text-center" style="padding:10px">
+                <img src="../../images/good/5.jpg" width="150px" >
+                <p style="color: gray">蜗牛10plus</p>
+                <p style="color: orangered">价格:1999.99元</p>
+            </div>
+            <div class="col-md-2 text-center" style="padding:10px">
+                <img src="../../images/good/6.jpg" width="150px" >
+                <p style="color: gray">蜗牛10plus</p>
+                <p style="color: orangered">价格:1999.99元</p>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="text/javascript" src="../../script/bootstrap.js"></script>
+
+</body>
+</html>

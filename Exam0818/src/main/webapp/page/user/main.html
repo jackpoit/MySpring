@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+    <script type="text/javascript" src="../../script/jquery-3.5.1.js"></script>
+    <style type="text/css">
+
+        .ul-li-1{
+            background: gray;
+        }
+        .ul-li-1 li{
+            line-height:23px;
+        }
+        .ul-li-1 li a {
+            font-size: 12px;
+            color: white;
+        }
+    </style>
+    <script type="text/javascript">
+        $(function () {
+           $("#firstNavId li").hover(function () {
+                $("#firstGoodsId").fadeIn(400);
+           },function () {
+               $("#firstGoodsId").stop(true);
+           });
+            $("#firstNavId li").mouseout(function () {
+                $("#firstGoodsId").fadeOut(400);
+            });
+
+            $("#firstGoodsId").mouseover(function () {
+                $("#firstGoodsId").stop(true);
+            });
+            $("#firstGoodsId").mouseout(function () {
+                $("#firstGoodsId").fadeOut(400);
+            });
+
+        });
+    </script>
+    
+</head>
+<body>
+    <div class="container">
+        <div class="row" style="margin-top: 30px">
+            <div class="col-md-2">
+                <ul class="nav nav-stacked ul-li-1 text-center" id="firstNavId">
+                    <li><a href="#">手机丶电话卡</a></li>
+                    <li><a href="#">手机丶电话卡</a></li>
+                    <li><a href="#">手机丶电话卡</a></li>
+                    <li><a href="#">手机丶电话卡</a></li>
+                    <li><a href="#">手机丶电话卡</a></li>
+                    <li><a href="#">手机丶电话卡</a></li>
+                    <li><a href="#">手机丶电话卡</a></li>
+                    <li><a href="#">手机丶电话卡</a></li>
+                </ul>
+            </div>
+            <div class="col-md-10" style="margin-left: -24px;position: relative">
+                <div id="myCarousel" class=" carousel slide " >
+                    <!-- 轮播（Carousel）指标 -->
+                    <ol class="carousel-indicators">
+                        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                        <li data-target="#myCarousel" data-slide-to="1"></li>
+                        <li data-target="#myCarousel" data-slide-to="2"></li>
+                    </ol>
+                    <!-- 轮播（Carousel）项目 -->
+                    <div class="carousel-inner">
+                        <div class="item active">
+                            <img src="../../images/good/bg1.jpg" alt="First slide">
+                        </div>
+                        <div class="item">
+                            <img src="../../images/good/bg2.jpg" alt="Second slide">
+                        </div>
+                        <div class="item">
+                            <img src="../../images/good/bg3.jpg" alt="Third slide">
+                        </div>
+                    </div>
+                    <!-- 轮播（Carousel）导航 -->
+                    <a class="carousel-control left" href="#myCarousel" data-slide="prev" style="display:flex;align-items:center;justify-content:center;font-size:30px">&laquo;</a>
+                    <a class="carousel-control right" href="#myCarousel"  data-slide="next" style="display:flex;align-items:center;justify-content:center;font-size:30px">&raquo;</a>
+                </div>
+
+
+                <div id="firstGoodsId" class="row table-bordered" style="display:none;position: absolute;left:25px;top:0px;background: white;z-index:1">
+                    <div class="col-md-2 text-center table-bordered">
+                        <img src="../../images/user/1.jpg" width="80px" style="margin-top: 10px">
+                        <p style="color: gray">蜗牛10plus</p>
+                        <p style="color: orangered">价格:1888.88元</p>
+                    </div>
+                    <div class="col-md-2 text-center table-bordered">
+                        <img src="../../images/user/1.jpg" width="80px" style="margin-top: 10px">
+                        <p style="color: gray">蜗牛10plus</p>
+                        <p style="color: orangered">价格:1888.88元</p>
+                    </div>
+                    <div class="col-md-2 text-center table-bordered">
+                        <img src="../../images/user/1.jpg" width="80px" style="margin-top: 10px">
+                        <p style="color: gray">蜗牛10plus</p>
+                        <p style="color: orangered">价格:1888.88元</p>
+                    </div>
+                    <div class="col-md-2 text-center table-bordered">
+                        <img src="../../images/user/1.jpg" width="80px" style="margin-top: 10px">
+                        <p style="color: gray">蜗牛10plus</p>
+                        <p style="color: orangered">价格:1888.88元</p>
+                    </div>
+                    <div class="col-md-2 text-center table-bordered">
+                        <img src="../../images/user/1.jpg" width="80px" style="margin-top: 10px">
+                        <p style="color: gray">蜗牛10plus</p>
+                        <p style="color: orangered">价格:1888.88元</p>
+                    </div>
+                    <div class="col-md-2 text-center table-bordered">
+                        <img src="../../images/user/1.jpg" width="80px" style="margin-top: 10px">
+                        <p style="color: gray">蜗牛10plus</p>
+                        <p style="color: orangered">价格:1888.88元</p>
+                    </div>
+                    <div class="col-md-2 text-center table-bordered">
+                        <img src="../../images/user/1.jpg" width="80px" style="margin-top: 10px">
+                        <p style="color: gray">蜗牛10plus</p>
+                        <p style="color: orangered">价格:1888.88元</p>
+                    </div>
+                    <div class="col-md-2 text-center table-bordered">
+                        <img src="../../images/user/1.jpg" width="80px" style="margin-top: 10px">
+                        <p style="color: gray">蜗牛10plus</p>
+                        <p style="color: orangered">价格:1888.88元</p>
+                    </div>
+                    <div class="col-md-2 text-center table-bordered">
+                        <img src="../../images/user/1.jpg" width="80px" style="margin-top: 10px">
+                        <p style="color: gray">蜗牛10plus</p>
+                        <p style="color: orangered">价格:1888.88元</p>
+                    </div>
+
+                    <div class="col-md-2 text-center table-bordered">
+                        <img src="../../images/user/1.jpg" width="80px" style="margin-top: 10px">
+                        <p style="color: gray">蜗牛10plus</p>
+                        <p style="color: orangered">价格:1888.88元</p>
+                    </div>
+                    <div class="col-md-2 text-center table-bordered">
+                        <img src="../../images/user/1.jpg" width="80px" style="margin-top: 10px">
+                        <p style="color: gray">蜗牛10plus</p>
+                        <p style="color: orangered">价格:1888.88元</p>
+                    </div>
+                    <div class="col-md-2 text-center table-bordered">
+                        <img src="../../images/user/1.jpg" width="80px" style="margin-top: 10px">
+                        <p style="color: gray">蜗牛10plus</p>
+                        <p style="color: orangered">价格:1888.88元</p>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <h2>热门商品</h2>
+        <div class="row text-center" style="margin-top: 20px">
+            <div class="col-md-3 table-bordered">
+                <a href="detail.html" style="text-decoration: none" target="showFrame">
+                    <img src="../../images/good/1.jpg" width="200px" style="margin-top: 20px">
+                    <p style="color: gray">蜗牛10plus</p>
+                    <p style="color: orangered">价格:1999.99元</p>
+                </a>
+            </div>
+            <div class="col-md-3 table-bordered">
+                <a href="detail.html" style="text-decoration: none" target="showFrame">
+                    <img src="../../images/good/2.jpg" width="200px" style="margin-top: 20px">
+                    <p style="color: gray">蜗牛10plus</p>
+                    <p style="color: orangered">价格:1999.99元</p>
+                </a>
+            </div>
+            <div class="col-md-3 table-bordered">
+                <a href="detail.html" style="text-decoration: none" target="showFrame">
+                    <img src="../../images/good/3.jpg" width="200px" style="margin-top: 20px">
+                    <p style="color: gray">蜗牛10plus</p>
+                    <p style="color: orangered">价格:1999.99元</p>
+                </a>
+            </div>
+            <div class="col-md-3 table-bordered">
+                <a href="detail.html" style="text-decoration: none" target="showFrame">
+                    <img src="../../images/good/4.jpg" width="200px" style="margin-top: 20px">
+                    <p style="color: gray">蜗牛10plus</p>
+                    <p style="color: orangered">价格:1999.99元</p>
+                </a>
+            </div>
+            <div class="col-md-3 table-bordered">
+                <a href="detail.html" style="text-decoration: none" target="showFrame">
+                    <img src="../../images/good/5.jpg" width="200px" style="margin-top: 20px">
+                    <p style="color: gray">蜗牛10plus</p>
+                    <p style="color: orangered">价格:1999.99元</p>
+                </a>
+            </div>
+            <div class="col-md-3 table-bordered">
+                <a href="detail.html" style="text-decoration: none" target="showFrame">
+                    <img src="../../images/good/6.jpg" width="200px" style="margin-top: 20px">
+                    <p style="color: gray">蜗牛10plus</p>
+                    <p style="color: orangered">价格:1999.99元</p>
+                </a>
+            </div>
+            <div class="col-md-3 table-bordered">
+                <a href="detail.html" style="text-decoration: none" target="showFrame">
+                    <img src="../../images/good/2.jpg" width="200px" style="margin-top: 20px">
+                    <p style="color: gray">蜗牛10plus</p>
+                    <p style="color: orangered">价格:1999.99元</p>
+                </a>
+            </div>
+            <div class="col-md-3 table-bordered">
+                <a href="detail.html" style="text-decoration: none" target="showFrame">
+                    <img src="../../images/good/3.jpg" width="200px" style="margin-top: 20px">
+                    <p style="color: gray">蜗牛10plus</p>
+                    <p style="color: orangered">价格:1999.99元</p>
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <ul class="pagination">
+                    <li><a href="#">&laquo;</a></li>
+                    <li><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">&raquo;</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="../../script/bootstrap.js"></script>
+
+</body>
+</html>
