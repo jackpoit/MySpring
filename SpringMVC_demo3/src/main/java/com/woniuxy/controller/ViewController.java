@@ -19,8 +19,12 @@ public class ViewController {
 
 	@RequestMapping("/{path}")
 	public String gotoView(@PathVariable String path){
-
 		return path;
+	}
+
+	@RequestMapping("/{dir}/{path}")
+	public String gotoView(@PathVariable String dir,@PathVariable String path){
+		return dir+"/"+path;
 	}
 
 }

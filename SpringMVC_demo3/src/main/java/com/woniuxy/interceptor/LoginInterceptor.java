@@ -17,7 +17,13 @@ public class LoginInterceptor implements HandlerInterceptor {
 	//先拦截 可以避免404 是对过滤器的优化
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-		request.setCharacterEncoding("text/html;charset=utf-8");
+		System.out.println("LoginInterceptor执行了preHandle方法");
+
+		/**
+		 * 分开权限的2种方法:
+		 * 		1.session中放不同的值,写2个拦截器
+		 * 		2.下面从session中若能去到,查看status 0/1再分权限
+		 */
 		//判断是否登录
 		HttpSession session = request.getSession(false);
 		if (session == null || session.getAttribute("user") == null) {
@@ -32,11 +38,13 @@ public class LoginInterceptor implements HandlerInterceptor {
 
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-		HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
+		System.out.println("LoginInterceptor执行了postHandle方法");
+
 	}
 
 	@Override
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-		HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
+		System.out.println("LoginInterceptor执行了afterCompletion方法");
+
 	}
 }

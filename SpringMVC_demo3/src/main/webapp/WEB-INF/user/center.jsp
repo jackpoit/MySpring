@@ -12,5 +12,10 @@
 </head>
 <body>
 <h1>用户中心</h1>
+
+<h2>
+    <a href="${pageContext.request.contextPath}/user/logout">注销</a>
+</h2>
+
 </body>
 </html>

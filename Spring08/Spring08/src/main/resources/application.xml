@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+        https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--1.配置注解扫描范围-->
+    <context:component-scan base-package="com.woniuxy">
+
+    </context:component-scan>
+    <!--2.加载属性文件-->
+    <context:property-placeholder location="classpath:db.properties"/>
+    <!--3.配置数据源 DruidDataSource-->
+    <!--druid-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${driver}"/>
+        <property name="url" value="${url}"/>
+        <property name="password" value="${password}"/>
+        <property name="username" value="${user}"/>
+        <property name="initialSize" value="${initPoolSize}"/>
+        <property name="maxActive" value="${maxPoolSize}"/>
+    </bean>
+
+    <!--支持aop注解声明-->
+    <aop:aspectj-autoproxy/>
+    <!--4.sqlSessionFactory 交给spring容器进行管理-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--4.1 加载全局映射文件-->
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <!--4.2 加载数据源-->
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!--5.将mapper代理对象交给spring容器进行管理-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.woniuxy.mapper"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    </bean>
+
+    <!--1.配置shiro的核心 安全管理器-->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realms">
+            <list>
+                <ref bean="myRealm1"/>
+            </list>
+        </property>
+    </bean>
+
+    <!--配置自定义认证器-->
+    <bean id="myRealm1" class="com.woniuxy.shiro.realm.MyRealm1">
+        <property name="credentialsMatcher">
+            <bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+                <property name="hashAlgorithmName" value="MD5"/>
+                <property name="hashIterations" value="1023"/>
+            </bean>
+        </property>
+    </bean>
+
+    <!--2.配置shiro的生命周期-->
+    <bean class="org.apache.shiro.spring.LifecycleBeanPostProcessor" id="lifecycleBeanPostProcessor"/>
+    <!--3.支持shiro的注解配置-->
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
+    </bean>
+    <!--4.配置shiro的过滤器-->
+    <bean class="org.apache.shiro.spring.web.ShiroFilterFactoryBean" id="delegatingFilterProxy">
+        <!--注入安全管理器-->
+        <property name="securityManager" ref="securityManager"/>
+        <!--登录首页-->
+        <property name="loginUrl" value="/login.jsp"/>
+        <!--认证成功跳转的页面-->
+        <property name="successUrl" value="/main.jsp"/>
+        <!--用户认证成功,但是没有访问对应的资源权限时,自动跳转此页面-->
+        <property name="unauthorizedUrl" value="/unauthorized.jsp"/>
+
+        <property name="filterChainDefinitionMap" ref="map"/>
+    </bean>
+
+    <!--配置封装map集合的工厂类-->
+    <bean id="definitionMap" class="com.woniuxy.shiro.realm.MyFilterMap"/>
+    <!--使用spring容器中的对象 调用其中的方法得到最终的对象-->
+    <bean id="map" factory-bean="definitionMap" factory-method="getMap"/>
+</beans>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.woniuxy.mapper.UserMapper">
+
+    <resultMap id="baseMap" type="com.woniuxy.bean.User">
+        <id property="id" column="id"/>
+        <result column="user_no" property="userNo"/>
+        <result column="user_pass" property="userPass"/>
+        <result column="code_pass" property="codePass"/>
+        <result column="count" property="count"/>
+        <result column="salt_value" property="saltValue"/>
+        <result column="user_phone" property="userPhone"/>
+    </resultMap>
+    <!--    1.User login(String userNo);-->
+    <select id="login" resultMap="baseMap">
+        SELECT id,user_no, user_pass, code_pass, count, salt_value,user_phone
+        FROM t_users
+        WHERE user_no = #{value}
+    </select>
+
+    <!--int add(User user);-->
+    <insert id="add" parameterType="com.woniuxy.bean.User">
+        INSERT INTO t_users
+            (user_no, user_pass, code_pass, count, salt_value)
+            VALUE (#{userNo},#{userPass},#{codePass},#{count},#{saltValue})
+    </insert>
+
+
+<!--    List<String> getRolesByNo(String userNo);-->
+    <select id="getRolesByNo" resultType="string">
+        SELECT
+        r.role_name
+        FROM t_users u
+        JOIN users_roles ur ON u.id=ur.user_id
+        JOIN t_roles r ON ur.role_id=r.id
+        WHERE u.user_no=#{value}
+    </select>
+
+</mapper>

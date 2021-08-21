@@ -22,6 +22,9 @@ public class TestInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		System.out.println("TestInterceptor执行了preHandle方法");
+		response.setContentType("text/html;charset=utf-8");
+
+
 //		return false;//false:不会放行到Controller[应用:登录拦截]
 		return true; //条件满足时放行到Controller
 	}

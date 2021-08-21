@@ -61,7 +61,7 @@
             <tx:method name="update*"/>
 
             <tx:method name="purchase" propagation="REQUIRED"/>
-            <!--            <tx:method name="purchase" propagation="REQUIRES_NEW"/>-->
+                        <tx:method name="purchase" propagation="REQUIRES_NEW"/>
             <tx:method name="checkout" propagation="REQUIRES_NEW"/>
 
 

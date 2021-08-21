@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+
+    <!--配置参数-->
+    <settings>
+        <setting name="mapUnderscoreToCamelCase" value="true"/><!--自动转驼峰-->
+        <setting name="cacheEnabled" value="false"/><!--二级缓存开关,一级默认开启-->
+        <setting name="lazyLoadingEnabled" value="false"/><!--全局懒加载-->
+        <setting name="aggressiveLazyLoading" value="false"/>
+        <!--侵入式懒加载
+            正常侵入加载:true:任何方法的调用都会加载该对象的所有属性[发送分布查询的sql]
+            深度侵入:false:按需加载[真正使用这个属性时才会发送SQL去查询]
+        -->
+<!--        <setting name="cacheEnabled" value="true"/>-->
+    </settings>
+
+    <plugins>
+        <!--分页插件-->
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
+            <!--分页插件检测当前数据库连接,自动选择合适的分页方式-->
+            <property name="helpDialect" value="mysql"/>
+            <property name="pageSizeZero" value="true"/>
+            <property name="reasonable" value="true"/>
+        </plugin>
+    </plugins>
+
+<!--配置写好的SQL映射文件-->
+    <mappers>
+       <mapper resource="com/woniuxy/mapper/RoleMapper.xml"/>
+       <mapper resource="com/woniuxy/mapper/UserMapper.xml"/>
+       <mapper resource="com/woniuxy/mapper/PermissionMapper.xml"/>
+    </mappers>
+</configuration>

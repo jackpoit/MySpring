@@ -41,4 +41,13 @@ public class UserController {
 		//
 		return "user/center";
 	}
+
+	@RequestMapping("logout")
+	public String logout(HttpSession session){
+		if (session!=null&&session.getAttribute("user")!=null){
+			session.removeAttribute("user");
+		}
+
+		return "redirect:/";
+	}
 }

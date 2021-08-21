@@ -38,36 +38,38 @@
         <property name="defaultEncoding" value="UTF-8"/>
     </bean>
 
-    <!--配置格式化转换服务工厂-->
-    <!--    <mvc:annotation-driven conversion-service="conversionService"/>-->
-    <!--    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">-->
-    <!--        &lt;!&ndash;自定义转换器&ndash;&gt;-->
-    <!--        <property name="converters">-->
-    <!--            <set>-->
-    <!--                <bean class="com.woniuxy.converters.DateConverter"/>-->
-    <!--            </set>-->
-    <!--        </property>-->
-    <!--    </bean>-->
+<!--    &lt;!&ndash;配置格式化转换服务工厂&ndash;&gt;-->
+<!--    &lt;!&ndash;    <mvc:annotation-driven conversion-service="conversionService"/>&ndash;&gt;-->
+<!--    &lt;!&ndash;    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">&ndash;&gt;-->
+<!--    &lt;!&ndash;        &lt;!&ndash;自定义转换器&ndash;&gt;&ndash;&gt;-->
+<!--    &lt;!&ndash;        <property name="converters">&ndash;&gt;-->
+<!--    &lt;!&ndash;            <set>&ndash;&gt;-->
+<!--    &lt;!&ndash;                <bean class="com.woniuxy.converters.DateConverter"/>&ndash;&gt;-->
+<!--    &lt;!&ndash;            </set>&ndash;&gt;-->
+<!--    &lt;!&ndash;        </property>&ndash;&gt;-->
+<!--    &lt;!&ndash;    </bean>&ndash;&gt;-->
 
-    <!--配置拦截器Interceptor-->
-    <mvc:interceptors>
-        <mvc:interceptor>
-<!--            <mvc:mapping path="/*"/> &lt;!&ndash; /admin  /admin.do  /admin/test/do(拦不了)&ndash;&gt;-->
-            <mvc:mapping path="/**"/> <!--所有请求-->
-            <mvc:exclude-mapping path="/css/*"/>
-            <mvc:exclude-mapping path="/js/*"/>
-            <mvc:exclude-mapping path="/images/*"/>
-            <mvc:exclude-mapping path="/fonts/*"/>
-            <mvc:exclude-mapping path="/resources/*"/>
-            <mvc:exclude-mapping path="/static/*"/>
-            <bean class="com.woniuxy.interceptor.TestInterceptor"/>
-        </mvc:interceptor>
+<!--    &lt;!&ndash;配置拦截器Interceptor&ndash;&gt;-->
+<!--    <mvc:interceptors>-->
+<!--        <mvc:interceptor>-->
+<!--&lt;!&ndash;            <mvc:mapping path="/*"/> &lt;!&ndash; /admin  /admin.do  /admin/test/do(拦不了)&ndash;&gt;&ndash;&gt;-->
+<!--            <mvc:mapping path="/**"/> &lt;!&ndash;所有请求&ndash;&gt;-->
+<!--            <mvc:exclude-mapping path="/css/*"/>-->
+<!--            <mvc:exclude-mapping path="/js/*"/>-->
+<!--            <mvc:exclude-mapping path="/images/*"/>-->
+<!--            <mvc:exclude-mapping path="/fonts/*"/>-->
+<!--            <mvc:exclude-mapping path="/resources/*"/>-->
+<!--            <mvc:exclude-mapping path="/static/*"/>-->
+<!--            <bean class="com.woniuxy.interceptor.TestInterceptor"/>-->
+<!--        </mvc:interceptor>-->
 
-        <mvc:interceptor>
-            <mvc:mapping path="/user/center"/>
-            <mvc:mapping path="/admin/*"/>
-            <bean class="com.woniuxy.interceptor.LoginInterceptor"/>
-        </mvc:interceptor>
-    </mvc:interceptors>
+<!--        <mvc:interceptor>-->
+<!--            <mvc:mapping path="/user/center"/>-->
+<!--            <mvc:mapping path="/view/user/center"/>-->
+<!--            <mvc:mapping path="/view/admin/*"/>-->
+<!--            <mvc:mapping path="/admin/*"/>-->
+<!--            <bean class="com.woniuxy.interceptor.LoginInterceptor"/>-->
+<!--        </mvc:interceptor>-->
+<!--    </mvc:interceptors>-->
 
 </beans>
