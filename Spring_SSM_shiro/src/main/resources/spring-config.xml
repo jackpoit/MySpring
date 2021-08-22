@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+        https://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/tx
+        https://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!--配置注解扫描范围-->
+    <context:component-scan base-package="com.woniuxy">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        <context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
+    </context:component-scan>
+
+    <!--支持aop注解声明-->
+    <aop:aspectj-autoproxy/>
+
+    <!--加载属性文件-->
+    <context:property-placeholder location="classpath:application.properties"/>
+
+    <!--配置数据源 DruidDataSource-->
+    <!--druid-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${spring.datasource.driver}"/>
+        <property name="url" value="${spring.datasource.url}"/>
+        <property name="password" value="${spring.datasource.password}"/>
+        <property name="username" value="${spring.datasource.user}"/>
+        <property name="initialSize" value="${spring.datasource.initPoolSize}"/>
+        <property name="maxActive" value="${spring.datasource.maxPoolSize}"/>
+        <property name="maxWait" value="${spring.datasource.maxWait}"/>
+        <property name="minIdle" value="${spring.datasource.minIdle}"/>
+        <property name="timeBetweenEvictionRunsMillis" value="60000"/>
+        <property name="minEvictableIdleTimeMillis" value="300000"/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="testOnBorrow" value="false"/>
+        <property name="testOnReturn" value="false"/>
+        <property name="poolPreparedStatements" value="${spring.datasource.poolPreparedStatements}"/>
+        <property name="maxOpenPreparedStatements" value="${spring.datasource.maxOpenPreparedStatements}"/>
+        <property name="asyncInit" value="${spring.datasource.asyncInit}"/>
+    </bean>
+
+    <!--配置声明式事务管理[注解 xml]搭建事务平台管理器-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <!--配置基于AOP的声明式xml事务-->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="add" isolation="DEFAULT" propagation="REQUIRED"/>
+            <tx:method name="delete*" isolation="DEFAULT" propagation="REQUIRED"/>
+            <tx:method name="update*" isolation="DEFAULT" propagation="REQUIRED"/>
+            <tx:method name="find*" isolation="DEFAULT" propagation="REQUIRED" read-only="true"/>
+        </tx:attributes>
+    </tx:advice>
+    <aop:config>
+        <aop:pointcut id="servicePoint" expression="execution(* com.woniuxy.service.impl.*ServiceImpl.*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="servicePoint"/>
+    </aop:config>
+    <!--开启基于注解的声明式事务管理-->
+   <!-- <tx:annotation-driven transaction-manager="transactionManager"/>-->
+
+
+    <!--Mybatis适配Spring 核心思想[将mybatis的sqlSessionFactory交给Spring管理]-->
+    <bean class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <property name="dataSource" ref="dataSource"/>
+        <property name="typeAliasesPackage" value="com.woniuxy.bean"/>
+        <property name="mapperLocations" value="classpath:mapper/*Mapper.xml"/>
+    </bean>
+
+    <!--升级[通用mapper:自动封装了单表的CRUD]-->
+    <bean class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.woniuxy.dao"/>
+    </bean>
+
+    <import resource="classpath:spring-shiro.xml"/>
+
+
+</beans>

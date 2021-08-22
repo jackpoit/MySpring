@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!--1.配置shiro的核心 安全管理器-->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realms">
+            <list>
+                <ref bean="myRealm"/>
+            </list>
+        </property>
+    </bean>
+
+    <!--配置自定义认证器-->
+    <bean id="myRealm" class="com.woniuxy.shiro.realm.MyRealm">
+        <property name="credentialsMatcher">
+            <bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+                <property name="hashAlgorithmName" value="MD5"/>
+                <property name="hashIterations" value="1023"/>
+            </bean>
+        </property>
+    </bean>
+
+    <!--2.配置shiro的生命周期-->
+    <bean class="org.apache.shiro.spring.LifecycleBeanPostProcessor" id="lifecycleBeanPostProcessor"/>
+    <!--3.支持shiro的注解配置-->
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
+    </bean>
+    <!--4.配置shiro的过滤器-->
+    <bean class="org.apache.shiro.spring.web.ShiroFilterFactoryBean" id="shiroFilter">
+        <!--注入安全管理器-->
+        <property name="securityManager" ref="securityManager"/>
+        <!--登录首页-->
+        <property name="loginUrl" value="/login.jsp"/>
+        <!--认证成功跳转的页面-->
+        <property name="successUrl" value="/main.jsp"/>
+        <!--用户认证成功,但是没有访问对应的资源权限时,自动跳转此页面-->
+        <property name="unauthorizedUrl" value="/unauthorized.jsp"/>
+
+        <property name="filterChainDefinitionMap" ref="map"/>
+    </bean>
+
+    <!--配置封装map集合的工厂类-->
+    <bean id="definitionMap" class="com.woniuxy.shiro.realm.MyFilterMap"/>
+    <!--使用spring容器中的对象 调用其中的方法得到最终的对象-->
+    <bean id="map" factory-bean="definitionMap" factory-method="getMap"/>
+</beans>

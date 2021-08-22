@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.woniuxy.mapper.PermissionMapper">
+
+    <resultMap id="oneToOneStepMap" type="com.woniuxy.bean.Permission">
+
+        <id property="id" column="id"/>
+
+        <association property="permissionName" javaType="string"
+                     select="com.woniuxy.mapper.PermissionMapper.getPermissionName" column="permission_id" >
+        </association>
+        <association property="role" javaType="com.woniuxy.bean.Role"
+                     select="com.woniuxy.mapper.RoleMapper.findById" column="role_id">
+        </association>
+
+    </resultMap>
+
+
+
+
+<!--    1.List<Permission> getAllPermission();-->
+    <select id="getAllPermission" resultMap="oneToOneStepMap">
+    SELECT
+        id,role_id,permission_id
+    FROM roles_permission
+    </select>
+
+<!--    2.String getPermissionName(Integer id);-->
+<select id="getPermissionName" resultType="string">
+    SELECT
+        permission_name
+        FROM  t_permissions
+        WHERE id=#{value}
+</select>
+
+    <resultMap id="baseMap" type="com.woniuxy.bean.Permission">
+        <id property="id" column="id"/>
+        <result column="permission_name" property="permissionName"/>
+    </resultMap>
+
+</mapper>
