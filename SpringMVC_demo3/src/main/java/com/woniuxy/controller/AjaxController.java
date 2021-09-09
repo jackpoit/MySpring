@@ -12,6 +12,7 @@ import java.util.List;
 /**
  *当这个类每个请求都是ajax请求都是
  * :@RestController :不会通过视图解析器来解析了
+ * TEST
  */
 //@ResponseBody
 //@Controller

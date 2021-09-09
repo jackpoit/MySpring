@@ -27,7 +27,7 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
-    <!--配置格式化转换服务工厂-->
+<!--    配置格式化转换服务工厂-->
 <!--    <mvc:annotation-driven conversion-service="conversionService"/>-->
 <!--    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">-->
 <!--        &lt;!&ndash;自定义转换器&ndash;&gt;-->
